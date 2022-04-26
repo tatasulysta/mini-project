@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 function History() {
+  useEffect(() => {
+    document.title = "History";
+  }, []);
   return (
     <div>
       History
