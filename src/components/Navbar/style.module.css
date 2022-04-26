@@ -1,0 +1,13 @@
+.logo {
+  font-size: 25px;
+}
+.navbar {
+  background-color: white !important;
+  border: 1px solid #c4c4c4;
+}
+
+@media only screen and (max-width: 600px) {
+  .logo {
+    font-size: 18px;
+  }
+}
