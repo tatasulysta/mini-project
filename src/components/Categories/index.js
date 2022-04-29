@@ -1,14 +1,39 @@
 import React, { useEffect, useState } from "react";
 import Category from "../Card/Category";
-import MenuCards from "../MenuCards";
+import MenuContainer from "../MenuContainer/Index";
 import { Row, Col, Container } from "react-bootstrap";
+import { GETpizza, GETburger, GETdrink, GETsnack } from "../../GraphQL/query";
+import { useQuery } from "@apollo/client";
+import { buildQueryFromSelectionSet } from "@apollo/client/utilities";
 
 function Categories() {
   const [select, setSelect] = useState("pizza");
+  const { data: resPizza, loading: loadPizza } = useQuery(GETpizza);
+  const { data: resBurger, loading: loadBurger } = useQuery(GETburger);
+  const { data: resDrink, loading: loaDrink } = useQuery(GETdrink);
+  const { data: resSnack, loading: loadSnack } = useQuery(GETsnack);
 
+  const [list, setList] = useState([]);
   const handleClick = (what) => {
     setSelect(what);
+    if (what === "burger") {
+      setList(resBurger?.menu);
+    }
+    if (what === "pizza") {
+      setList(resPizza?.menu);
+    }
+    if (what === "drink") {
+      setList(resDrink?.menu);
+    }
+    if (what === "snack") {
+      setList(resSnack?.menu);
+    }
   };
+  useEffect(() => {
+    if (resPizza?.menu) {
+      setList(resPizza?.menu);
+    }
+  }, [resPizza]);
 
   return (
     <>
@@ -88,6 +113,10 @@ function Categories() {
           </Col>
         </Row>
       </Container>
+      <br />
+      {!loadPizza && !loadBurger && !loadSnack && !loadSnack && (
+        <MenuContainer data={list} />
+      )}
     </>
   );
 }

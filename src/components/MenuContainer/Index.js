@@ -13,26 +13,9 @@ import "./style.css";
 //module swiper
 import { Pagination } from "swiper";
 
-function MenuContainer() {
-  const { data } = useQuery(GETall);
-  const [getRes, { data: respond, loading }] = useLazyQuery(GETmenu);
-  const [list, setList] = useState([]);
-  const [uid, setUID] = useState();
-
-  useEffect(() => {
-    setList(data?.menu);
-  }, [data?.menu]);
-
-  useEffect(() => {
-    setList(respond?.menu);
-  }, [respond?.menu]);
-
+function MenuContainer(props) {
   return (
     <div style={{ width: "90%", margin: "auto" }}>
-      <button onClick={() => getRes({ variables: { _eq: 1 } })}>satu</button>
-      <button onClick={() => getRes({ variables: { _eq: 2 } })}>satu</button>
-      <button>dua</button>
-      <button>tiga</button>
       <Swiper
         breakpoints={{
           320: {
@@ -52,7 +35,7 @@ function MenuContainer() {
         modules={[Pagination]}
         className="swiper-container"
       >
-        {list?.map((i) => {
+        {props.data?.map((i) => {
           return (
             <SwiperSlide>
               <MenuCard
@@ -66,7 +49,6 @@ function MenuContainer() {
           );
         })}
       </Swiper>
-      {loading && <h1>fetching..</h1>}
     </div>
   );
 }

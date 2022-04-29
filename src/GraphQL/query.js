@@ -20,11 +20,45 @@ const GETall = gql`
     }
   }
 `;
-const GETid = gql`
-  query MyQuery($_eq: Int!) {
-    menu(where: { id: { _eq: $_eq } }) {
+
+const GETpizza = gql`
+  query pizza {
+    menu(where: { id_category: { _eq: 1 } }, order_by: { id: asc }) {
       id
+      price
+      star
+      title
     }
   }
 `;
-export { GETmenu, GETall };
+const GETburger = gql`
+  query MyQuery {
+    menu(where: { id_category: { _eq: 2 } }, order_by: { id: asc }) {
+      id
+      price
+      star
+      title
+    }
+  }
+`;
+const GETdrink = gql`
+  query MyQuery {
+    menu(where: { id_category: { _eq: 3 } }, order_by: { id: asc }) {
+      id
+      price
+      star
+      title
+    }
+  }
+`;
+const GETsnack = gql`
+  query MyQuery {
+    menu(where: { id_category: { _eq: 4 } }, order_by: { id: asc }) {
+      id
+      price
+      star
+      title
+    }
+  }
+`;
+export { GETmenu, GETall, GETburger, GETpizza, GETsnack, GETdrink };
