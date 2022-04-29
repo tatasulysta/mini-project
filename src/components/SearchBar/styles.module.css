@@ -1,0 +1,26 @@
+.bar {
+  border: none;
+  caret-color: var(--primary-color);
+  width: 40%;
+}
+.bar:focus {
+  outline: none;
+  border: 1px solid var(--primary-color);
+}
+::placeholder {
+  color: #c4c4c4;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  color: #c4c4c4;
+}
+
+::-ms-input-placeholder {
+  color: #c4c4c4;
+}
+.button {
+  background-color: white;
+  border: none;
+  color: #535353;
+}

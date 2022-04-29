@@ -8,8 +8,8 @@ import NotFound from "./components/Pages/NotFound";
 function App() {
   return (
     <>
+      <Navibar />
       <div className="App">
-        <Navibar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/history" element={<History />} />

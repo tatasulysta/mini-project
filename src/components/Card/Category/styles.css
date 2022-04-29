@@ -1,0 +1,55 @@
+.card-m,
+.active {
+  width: auto;
+  border-radius: 10px;
+  display: inline-block;
+  padding: 0px 55px 0px;
+  -webkit-box-shadow: -2px 3px 4px 2px rgba(196, 196, 196, 0.54);
+  -moz-box-shadow: -2px 3px 4px 2px rgba(196, 196, 196, 0.54);
+  box-shadow: -2px 3px 4px 2px rgba(196, 196, 196, 0.54);
+}
+.card-m {
+  background-color: white;
+}
+.active {
+  background-color: var(--primary-color);
+}
+.active > .content-m > .navlink {
+  color: white;
+}
+.logo {
+  width: 40px;
+  height: auto;
+  margin: auto;
+}
+.navlink {
+  text-decoration: none;
+  color: black;
+  display: block;
+  font-weight: 600;
+  font-size: 13px;
+  text-align: center;
+  font-family: "Poppins", "sans-serif";
+}
+.content-m {
+  width: 100px;
+}
+.content-m > img {
+  display: block;
+  margin: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  .logo {
+    display: none !important;
+  }
+  .content {
+    width: 10vw;
+  }
+  .active,
+  .card-m {
+    padding: 5px 10 !important;
+    border-radius: 5px;
+    height: fit-content;
+  }
+}
