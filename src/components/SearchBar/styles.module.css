@@ -1,6 +1,7 @@
 .bar {
   border: none;
   caret-color: var(--primary-color);
+  display: inline-block;
   width: 40%;
 }
 .bar:focus {

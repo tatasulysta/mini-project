@@ -1,0 +1,10 @@
+.history-card {
+  padding: 10px;
+  border-radius: 10px;
+  width: 450px;
+  margin-bottom: 5px;
+}
+.history-img {
+  width: 100px;
+  background: white;
+}

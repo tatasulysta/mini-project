@@ -12,7 +12,7 @@ function Star(props) {
   }
   return (
     <div style={{ color: "var(--primary-color)", fontSize: "15px" }}>
-      {items}
+      <div key={props.id}>{items}</div>
     </div>
   );
 }

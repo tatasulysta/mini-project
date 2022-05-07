@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsCart2 } from "react-icons/bs";
 import { VscHistory } from "react-icons/vsc";

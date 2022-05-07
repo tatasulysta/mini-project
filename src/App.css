@@ -1,7 +1,20 @@
-.App {
-  width: 100vh;
-}
 :root {
   --primary-color: #fea82f;
   --background: #f9f9fb;
+  --secondary-color: #fbf1e6;
+  --accent-color: #aa8023;
+}
+h1 {
+  margin: 12px 0px 0px 50px;
+  color: #535353;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 600 !important;
+}
+.content {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+.inside {
+  margin-top: 20px;
+  margin-left: 10px;
 }

@@ -1,0 +1,35 @@
+.label-card {
+  width: 300px;
+  background-color: var(--secondary-color);
+  padding: 10px;
+  border-radius: 10px;
+}
+.label-img {
+  width: 70px;
+  border-radius: 100px;
+}
+.label-date {
+  margin-top: 5px;
+  font-size: 14px;
+  color: var(--accent-color);
+}
+.label-id {
+  color: #535353;
+}
+@media only screen and (max-width: 600px) {
+  .label-card {
+    width: 80%;
+  }
+
+  .child-1 {
+    width: 30%;
+  }
+  .child-2 {
+    width: 50%;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .label-card {
+    width: 80%;
+  }
+}

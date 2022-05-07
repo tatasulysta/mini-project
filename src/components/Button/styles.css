@@ -1,0 +1,32 @@
+.btn {
+  border-radius: 7px;
+  outline: none;
+  cursor: pointer;
+}
+.primary {
+  color: white;
+  background-color: var(--primary-color);
+}
+.secondary {
+  color: var(--primary-color);
+  background-color: none;
+  border: 2px solid var(--primary-color);
+}
+.small {
+  width: fit-content;
+  height: fit-content;
+  border-radius: 2px;
+}
+.primary,
+.secondary {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 600;
+}
+.medium {
+  width: 9vw;
+}
+@media only screen and (max-width: 600px) {
+  .medium {
+    width: 28vw;
+  }
+}

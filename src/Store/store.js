@@ -1,15 +1,7 @@
-// import { gql } from "@apollo/client";
-// import { createSlice } from "@reduxjs/toolkit";
-
-// const intialState = [{
-
-// }];
-// export const counterSlice=createSlice({
-//     name:'counter',
-//     intialState,
-//     reducers:{
-//         increment:(state)=>{
-
-//         }
-//     }
-// })
+import { configureStore } from "@reduxjs/toolkit";
+import counterReducer from "./counterSlice";
+export const store = configureStore({
+  reducer: {
+    counter: counterReducer,
+  },
+});

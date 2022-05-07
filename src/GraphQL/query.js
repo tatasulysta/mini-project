@@ -10,13 +10,10 @@ const GETmenu = gql`
     }
   }
 `;
-const GETall = gql`
-  query MyQuery2 {
-    menu {
-      id
+const GETprice = gql`
+  query MyQuery($_eq: Int!) {
+    menu(where: { id: { _eq: $_eq } }) {
       price
-      title
-      star
     }
   }
 `;
@@ -61,4 +58,50 @@ const GETsnack = gql`
     }
   }
 `;
-export { GETmenu, GETall, GETburger, GETpizza, GETsnack, GETdrink };
+const GETmenuByName = gql`
+  query MyQuery($_iregex: String!) {
+    menu(where: { title: { _iregex: $_iregex } }) {
+      id
+      id_category
+      price
+      star
+      title
+    }
+  }
+`;
+const GEThistories = gql`
+  query MyQuery($_eq: uuid!) {
+    history_details(
+      where: { id_label: { _eq: $_eq } }
+      order_by: { created_at: asc }
+    ) {
+      created_at
+      id
+      id_label
+      id_menu
+      menu {
+        title
+        price
+      }
+      qty
+    }
+  }
+`;
+const GETtotal = gql`
+  query MyQuery($id: uuid!) {
+    history_label_by_pk(id: $id) {
+      total
+    }
+  }
+`;
+export {
+  GETmenu,
+  GETprice,
+  GETburger,
+  GETpizza,
+  GETsnack,
+  GETdrink,
+  GETmenuByName,
+  GEThistories,
+  GETtotal,
+};

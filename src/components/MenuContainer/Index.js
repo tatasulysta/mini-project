@@ -1,7 +1,4 @@
-import React, { useEffect, useState } from "react";
-//GQL
-import { gql, useLazyQuery, useQuery } from "@apollo/client";
-import { GETall, GETmenu } from "../../GraphQL/query";
+import React from "react";
 import MenuCard from "../Card/MenuCard";
 // SWIPER
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -15,19 +12,16 @@ import { Pagination } from "swiper";
 
 function MenuContainer(props) {
   return (
-    <div style={{ width: "90%", margin: "auto" }}>
+    <div className="menu-container">
       <Swiper
         breakpoints={{
-          320: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-          },
           480: {
-            slidesPerView: 3,
-            spaceBetween: 30,
+            slidesPerView: 1,
           },
-
-          600: {
+          768: {
+            slidesPerView: 3,
+          },
+          1279: {
             slidesPerView: 5,
           },
         }}
@@ -37,7 +31,7 @@ function MenuContainer(props) {
       >
         {props.data?.map((i) => {
           return (
-            <SwiperSlide>
+            <SwiperSlide key={i.id}>
               <MenuCard
                 key={i.id}
                 id={i.id}

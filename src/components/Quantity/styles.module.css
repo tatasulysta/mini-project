@@ -1,0 +1,32 @@
+/* .inline,
+.decre,
+.incre {
+  display: inline-block;
+} */
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  height: 35px;
+  font-size: 16px;
+  border-radius: 18px;
+  border: 0.1rem solid #dad9d9;
+}
+.decre,
+.incre,
+.decre2 {
+  color: white;
+
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+}
+.decre2 {
+  background-color: #aa8023;
+  cursor: not-allowed !important;
+}
+.decre,
+.incre {
+  background-color: var(--primary-color);
+}
