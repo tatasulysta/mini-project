@@ -1,10 +1,10 @@
 import React from "react";
 import { Col, Row } from "react-bootstrap";
-import { ImageData } from "../../../Store/ImageData";
+import { ImageData } from "../../../utils/ImageData";
 import "./style.css";
 function HistoryCard(props) {
   return (
-    <>
+    <div>
       <Row className="history-card">
         <Col className="child-1">
           {ImageData.map((u) => {
@@ -33,7 +33,7 @@ function HistoryCard(props) {
           <b>{props.qty} x</b>
         </Col>
       </Row>
-    </>
+    </div>
   );
 }
 

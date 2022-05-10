@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import Loading from "../../Loading";
 import { useNavigate, useParams } from "react-router-dom";
 import HistoryCard from "../../Card/HistoryCard";
 import { GEThistories, GETtotal } from "../../../GraphQL/query";
@@ -26,7 +26,6 @@ function History(props) {
   };
   useEffect(() => {}, [data]);
   if (loading) {
-    return <h1>Load</h1>;
   }
   let order = params.historyId;
   order = order.substring(0, order.indexOf("-"));
@@ -73,20 +72,23 @@ function History(props) {
             })}
         </div>
         <br />
-        <InfoCard
-          title="Subtotal"
-          styling="primary"
-          price={
-            total?.history_label_by_pk.total -
-            0.02 * total?.history_label_by_pk.total
-          }
-        />
-        <InfoCard
-          title="Services (2%)"
-          styling="primary"
-          price={0.02 * total?.history_label_by_pk.total}
-        />
-        <InfoCard title="Total" price={total?.history_label_by_pk.total} />
+        <div className="info-3">
+          <InfoCard
+            title="Subtotal"
+            styling="primary"
+            price={
+              total?.history_label_by_pk.total -
+              0.02 * total?.history_label_by_pk.total
+            }
+          />
+
+          <InfoCard
+            title="Services (2%)"
+            styling="primary"
+            price={0.02 * total?.history_label_by_pk.total}
+          />
+          <InfoCard title="Total" price={total?.history_label_by_pk.total} />
+        </div>
       </div>
     </div>
   );

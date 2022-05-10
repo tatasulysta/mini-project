@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ImageData } from "../../../Store/ImageData";
+import { ImageData } from "../../../utils/ImageData";
 import "./styles.css";
 import { useSelector } from "react-redux";
 import { useMutation, useSubscription } from "@apollo/client";
@@ -24,7 +24,6 @@ function CartCard(props) {
     resCart?.Cart.map((i) => temp.push(i.id_menu));
     resCart?.Cart.map((i) => temp2.push(i.count));
     setID(temp);
-    setCount(temp2);
   }, [resCart]);
 
   const handleUpdate = () => {

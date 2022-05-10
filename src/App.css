@@ -18,3 +18,23 @@ h1 {
   margin-top: 20px;
   margin-left: 10px;
 }
+.app {
+  padding-bottom: 150px;
+  min-height: 100vh;
+  background-color: var(--background);
+}
+body {
+  background-color: var(--background);
+}
+.info {
+  float: right;
+}
+.info-2 {
+  float: right;
+  margin-right: 0;
+  padding-right: 0;
+  margin-top: 10px;
+}
+.info-3 {
+  float: left;
+}

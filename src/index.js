@@ -7,7 +7,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ApolloProvider } from "@apollo/client";
 import { Provider } from "react-redux";
 import client from "./GraphQL/client";
-import { store } from "./Store/store";
+import { store } from "./features/store";
 
 ReactDOM.render(
   <React.StrictMode>

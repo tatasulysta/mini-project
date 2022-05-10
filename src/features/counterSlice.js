@@ -40,11 +40,8 @@ export const counterSlice = createSlice({
       state.services = state.subtotal * 0.02;
       state.total = state.services + state.subtotal;
     },
-    reset: (state) => {
-      state.value = {
-        id: 0,
-        count: 0,
-      };
+    reset: (state, action) => {
+      state.value = action.payload;
     },
   },
 });

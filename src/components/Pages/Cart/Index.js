@@ -4,20 +4,23 @@ import CartCard from "../../Card/CartCard";
 import { GETcart } from "../../../GraphQL/subscription";
 import { useMutation, useSubscription } from "@apollo/client";
 import InfoCard from "../../Card/InfoCard";
-import { total } from "../../../Store/counterSlice";
+import { total } from "../../../features/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
-import NotFound from "../NotFound";
+
 import { Button } from "../../Button";
 import { v4 as uuidv4 } from "uuid";
-import loader from "../../../lotties/loader.json";
 import {
   AddHistoryLabel,
   AddHistoryDetails,
   DeleteCart,
 } from "../../../GraphQL/mutation";
-import Lottie from "react-lottie";
+import Loading from "../../Loading";
+import NoItems from "../NoItems";
+import { useNavigate } from "react-router-dom";
+
 function Cart() {
   const { data, loading } = useSubscription(GETcart);
+
   const [list, setList] = useState();
   const [addLabel] = useMutation(AddHistoryLabel);
   const [addHistory] = useMutation(AddHistoryDetails);
@@ -27,10 +30,11 @@ function Cart() {
   const services = useSelector((state) => state.counter.services);
   const sum = useSelector((state) => state.counter.total);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {}, [loading]);
   useEffect(() => {}, [data]);
-  useEffect(() => {}, [list]);
+
   useEffect(() => {
     setList(data?.Cart);
     let id = [];
@@ -50,7 +54,7 @@ function Cart() {
   }, [list, dispatch]);
   const handleCheckout = (sum, list) => {
     const temp = new Date();
-    // temp.toLocaleString()
+
     const uuid = uuidv4();
     const lists = list;
     addLabel({
@@ -72,27 +76,19 @@ function Cart() {
     });
     deleteCart();
   };
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: loader,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
+
   return (
     <>
-      <Container style={{ width: "100vw" }}>
+      <Container style={{ width: "100vw", minHeight: "100vh" }}>
         <Container style={{ margin: "auto" }}>
           {loading ? (
-            <Lottie options={defaultOptions} height={400} width={400} />
+            <Loading />
           ) : (
             <>
               {!loading && state ? (
-                <h2>kosong</h2>
+                <NoItems title={"Cart is Empty!"} />
               ) : (
                 <>
-                  {" "}
                   <Row
                     style={{
                       borderBottom: "1.5px solid black",
@@ -124,29 +120,42 @@ function Cart() {
                       />
                     );
                   })}
-                  <div style={{ float: "right" }}>
-                    <br />
-                    <InfoCard
-                      title={"Subtotal"}
-                      price={subtotal}
-                      styling={"primary"}
-                    />
-                    <InfoCard
-                      title={"Service (2%)"}
-                      price={services}
-                      styling={"primary"}
-                    />
-                    <InfoCard
-                      title={"Total"}
-                      price={sum}
-                      styling={"secondary"}
-                    />
-                    <Button
-                      children={"checkout"}
-                      onClick={() => handleCheckout(sum, list)}
-                    />
+                  <div className="info">
+                    <div>
+                      <br />
+                      <InfoCard
+                        title={"Subtotal"}
+                        price={subtotal}
+                        styling={"primary"}
+                      />
+                      &nbsp;
+                      <InfoCard
+                        title={"Service (2%)"}
+                        price={services}
+                        styling={"primary"}
+                      />
+                      &nbsp;
+                      <InfoCard
+                        title={"Total"}
+                        price={sum}
+                        styling={"secondary"}
+                      />
+                    </div>
+                    <div className="info-2">
+                      <Button
+                        children={"Continue Shopping"}
+                        butStyle={"secondary"}
+                        onClick={() => navigate("/")}
+                      />
+                      &nbsp;
+                      <Button
+                        children={"Checkout"}
+                        butSize={"medium"}
+                        onClick={() => handleCheckout(sum, list)}
+                      />{" "}
+                      &nbsp;
+                    </div>
                   </div>
-                  <div></div>
                 </>
               )}
             </>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "./styles.module.css";
 import { Col } from "react-bootstrap";
 import Star from "../../Star/Index";
-import { ImageData } from "../../../Store/ImageData";
+import { ImageData } from "../../../utils/ImageData";
 import Quantity from "../../Quantity/Index";
 function MenuCard(props) {
   let priceIDR = Intl.NumberFormat("en-ID");

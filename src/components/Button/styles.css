@@ -18,15 +18,17 @@
   border-radius: 2px;
 }
 .primary,
-.secondary {
+.secondary,
+.card {
   font-family: "Source Sans Pro", sans-serif;
   font-weight: 600;
 }
 .medium {
-  width: 9vw;
+  padding: 0px 30px;
+  height: 50px;
 }
 @media only screen and (max-width: 600px) {
   .medium {
-    width: 28vw;
+    width: 30vw;
   }
 }

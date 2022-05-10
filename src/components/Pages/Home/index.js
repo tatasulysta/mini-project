@@ -23,11 +23,13 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Lottie from "react-lottie";
 import searching from "../../../lotties/searching.json";
+import searchNotFound from "../../../lotties/searchNotFound.json";
+import Loading from "../../Loading";
 
 function Home() {
   useEffect(() => {
     document.title = "Home";
-  }, []);
+  });
 
   // Global state
   const counter = useSelector((state) => state.counter.value);
@@ -37,6 +39,7 @@ function Home() {
   const [name, setName] = useState("");
   const [id, setID] = useState([]);
   const [list, setList] = useState([]);
+  const [add, setAdd] = useState(false);
   let navigate = useNavigate();
 
   // graphql
@@ -89,15 +92,22 @@ function Home() {
     resCart?.Cart.map((i) => temp.push(i.id_menu));
     setID(temp);
   }, [resCart]);
+  useEffect(() => {
+    if (counter.length === 1) {
+      setAdd(false);
+    } else {
+      setAdd(true);
+    }
+  }, [counter]);
 
   const handleAddcart = () => {
     let notIn = [];
     let inIT = [];
     counter.map((obj) => {
       if (!id.includes(obj.id)) {
-        notIn.push(obj);
+        return notIn.push(obj);
       } else {
-        inIT.push(obj);
+        return inIT.push(obj);
       }
     });
     notIn.shift();
@@ -118,7 +128,7 @@ function Home() {
       });
     });
     navigate("/cart");
-    // dispatch(reset());
+    window.location.reload();
   };
   const defaultOptions = {
     loop: true,
@@ -128,6 +138,15 @@ function Home() {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
+  const notFound = {
+    loop: true,
+    autoplay: true,
+    animationData: searchNotFound,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   return (
     <>
       {loading ? (
@@ -140,7 +159,7 @@ function Home() {
         <div
           style={{
             width: "100vw",
-            height: "110vh",
+
             backgroundColor: "var(--background)",
           }}
         >
@@ -227,17 +246,42 @@ function Home() {
           </Container>
           <br />
 
-          {!loadPizza && !loadBurger && !loadDrink && !loadSnack && (
-            <MenuContainer data={list} />
+          {!loadPizza && !loadBurger && !loadDrink && !loadSnack ? (
+            <>
+              {list.length === 0 ? (
+                <>
+                  <Lottie options={notFound} width={300} />
+                  <h5
+                    style={{
+                      fontFamily: "Source Sans Pro, sans-serif",
+                      textAlign: "center",
+                      color: "var(--accent-color)",
+                    }}
+                  >
+                    We can't seem to find the items you're looing for.
+                  </h5>
+                </>
+              ) : (
+                <MenuContainer data={list} />
+              )}
+            </>
+          ) : (
+            <Loading />
           )}
           <Container>
-            <div style={{ float: "right", marginTop: "20px", display: "flex" }}>
-              <Button
-                children="Add to cart"
-                butStyle="primary"
-                onClick={handleAddcart}
-              />
-            </div>
+            {add ? (
+              <div
+                style={{ float: "right", marginTop: "20px", display: "flex" }}
+              >
+                <Button
+                  children="Add to cart"
+                  butStyle="primary"
+                  onClick={handleAddcart}
+                />
+              </div>
+            ) : (
+              ""
+            )}
           </Container>
         </div>
       )}
