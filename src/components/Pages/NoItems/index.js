@@ -23,7 +23,7 @@ function NoItems(props) {
         <Button
           children={"Continue Shopping"}
           butStyle={"secondary"}
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/menu")}
         />
       </div>
     </div>

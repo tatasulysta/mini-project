@@ -6,8 +6,16 @@ import { useParams, Outlet } from "react-router-dom";
 import Loading from "../../Loading";
 import { Row } from "react-bootstrap";
 import NoItems from "../NoItems";
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
+
 function Histories() {
-  const { data, loading } = useSubscription(GETlabel);
+  const uid = cookies.get("loginID");
+  const { data, loading } = useSubscription(GETlabel, {
+    variables: {
+      uid,
+    },
+  });
   const [state, setState] = useState(false);
 
   const params = useParams();
@@ -26,7 +34,7 @@ function Histories() {
     return <Loading />;
   }
   return (
-    <div style={{ backgroundColor: "var(--background)" }}>
+    <div style={{ backgroundColor: "var(--background)" }} className="padd">
       {!loading && state ? (
         <NoItems title={"No transaction yet"} />
       ) : (

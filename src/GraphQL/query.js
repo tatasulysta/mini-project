@@ -70,9 +70,9 @@ const GETmenuByName = gql`
   }
 `;
 const GEThistories = gql`
-  query MyQuery($_eq: uuid!) {
+  query MyQuery($_eq: uuid!, $uid: uuid!) {
     history_details(
-      where: { id_label: { _eq: $_eq } }
+      where: { id_label: { _eq: $_eq }, uid: { _eq: $uid } }
       order_by: { created_at: asc }
     ) {
       created_at
@@ -94,6 +94,22 @@ const GETtotal = gql`
     }
   }
 `;
+const GETuser = gql`
+  query MyQuery($email: String!, $password: String!) {
+    user(where: { email: { _eq: $email }, password: { _eq: $password } }) {
+      id
+      password
+      username
+    }
+  }
+`;
+const GETemail = gql`
+  query MyQuery($_eq: String!) {
+    user(where: { email: { _eq: $_eq } }) {
+      email
+    }
+  }
+`;
 export {
   GETmenu,
   GETprice,
@@ -104,4 +120,6 @@ export {
   GETmenuByName,
   GEThistories,
   GETtotal,
+  GETuser,
+  GETemail,
 };

@@ -4,18 +4,16 @@ import "./styles.css";
 import { useSelector } from "react-redux";
 import { useMutation, useSubscription } from "@apollo/client";
 import { GETcartID } from "../../../GraphQL/subscription";
-import { UpdateCart, DeleteCartItems } from "../../../GraphQL/mutation";
+import { DeleteCartItems } from "../../../GraphQL/mutation";
 import { AiFillCloseCircle } from "react-icons/ai";
-
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 function CartCard(props) {
   const counter = useSelector((state) => state.counter.value);
-
+  const uid = cookies.get("loginID");
   const { data: resCart } = useSubscription(GETcartID);
 
-  const [updateCart] = useMutation(UpdateCart);
-  const inIT = [];
   const [id, setID] = useState([]);
-  const [count, setCount] = useState([]);
   const [deleteById] = useMutation(DeleteCartItems);
 
   useEffect(() => {
@@ -25,33 +23,14 @@ function CartCard(props) {
     resCart?.Cart.map((i) => temp2.push(i.count));
     setID(temp);
   }, [resCart]);
-
-  const handleUpdate = () => {
-    counter.map((obj) => {
-      if (id.includes(obj.id)) {
-        inIT.push(obj);
-      }
-    });
-
-    inIT.map((obj, index) => {
-      return updateCart({
-        variables: {
-          _eq: obj.id,
-          count: +obj.count,
-        },
-      });
-    });
-  };
   const handleDelete = () => {
     deleteById({
       variables: {
         id_menu: props.id,
+        uid,
       },
     });
   };
-  useEffect(() => {
-    handleUpdate();
-  }, [counter]);
 
   let priceIDR = Intl.NumberFormat("en-ID");
 
@@ -80,22 +59,23 @@ function CartCard(props) {
           return false;
         })}
       </div>
-      <div className="col-lg-4 my-auto">
+      <div className=" col-lg-4  col-md-2 my-auto">
         <h5>{props.title}</h5>
         <p> Rp. {priceIDR.format(props.price)}</p>
       </div>
-      <div className="col-lg-1 my-auto mx-auto" style={style}>
+      <div className="col col-sm-11 col-lg-1 my-auto mx-auto" style={style}>
+        <span className="quantity">Qty : </span>
         {props.count}
       </div>
-      <div className="col-lg-1 my-auto mx-auto">
+      <div className=" col col-lg-1 col-sm-1 my-auto mx-auto">
         <AiFillCloseCircle
           fontSize={40}
           style={{ color: "var(--primary-color)" }}
           onClick={handleDelete}
         />
       </div>
-      <div className="col-lg-2  my-auto  mx-auto" style={style}>
-        Rp. {priceIDR.format(props.price * props.count)}
+      <div className=" col-lg-2 col-sm-12 my-auto  mx-auto" style={style}>
+        <b>Rp. {priceIDR.format(props.price * props.count)}</b>
       </div>
     </div>
   );

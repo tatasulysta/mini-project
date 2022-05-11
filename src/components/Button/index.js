@@ -2,7 +2,14 @@ import React from "react";
 import "./styles.css";
 const styles = ["primary", "secondary"];
 const size = ["medium", "small", "card"];
-export const Button = ({ children, onClick, butStyle, butSize, radius }) => {
+export const Button = ({
+  children,
+  onClick,
+  butStyle,
+  butSize,
+  radius,
+  type,
+}) => {
   const checkStyle = styles.includes(butStyle) ? butStyle : styles[0];
   const checkSize = size.includes(butSize) ? butSize : size[0];
   return (
@@ -10,6 +17,7 @@ export const Button = ({ children, onClick, butStyle, butSize, radius }) => {
       className={`btn ${checkSize} ${checkStyle} `}
       style={{ borderRadius: radius }}
       onClick={onClick}
+      type={type}
     >
       {children}
     </button>

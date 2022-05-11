@@ -6,13 +6,17 @@ import { GEThistories, GETtotal } from "../../../GraphQL/query";
 import { useQuery } from "@apollo/client";
 import InfoCard from "../../Card/InfoCard";
 import { Button } from "../../Button";
-
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 function History(props) {
   let params = useParams();
+  const uid = cookies.get("loginID");
+
   let priceIDR = Intl.NumberFormat("en-ID");
   const { data, loading } = useQuery(GEThistories, {
     variables: {
       _eq: params.historyId,
+      uid: uid,
     },
   });
   const { data: total } = useQuery(GETtotal, {
@@ -31,7 +35,7 @@ function History(props) {
   order = order.substring(0, order.indexOf("-"));
 
   return (
-    <div style={{ marginLeft: "10px" }}>
+    <div style={{ marginLeft: "10px" }} className="padd">
       <div className="head">
         <Button
           onClick={() => handleBack("/history")}

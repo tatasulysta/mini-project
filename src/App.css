@@ -19,9 +19,11 @@ h1 {
   margin-left: 10px;
 }
 .app {
-  padding-bottom: 150px;
   min-height: 100vh;
   background-color: var(--background);
+}
+.padd {
+  padding-bottom: 150px;
 }
 body {
   background-color: var(--background);
@@ -37,4 +39,23 @@ body {
 }
 .info-3 {
   float: left;
+}
+.quantity {
+  display: none;
+}
+.brandname {
+  font-family: "Ubuntu", sans-serif;
+  color: #535353;
+}
+
+@media only screen and (max-width: 800px) {
+  .info-2 {
+    float: left;
+  }
+  .info {
+    float: left;
+  }
+  .quantity {
+    display: contents;
+  }
 }

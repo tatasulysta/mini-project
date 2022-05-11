@@ -17,9 +17,15 @@ import {
 import Loading from "../../Loading";
 import NoItems from "../NoItems";
 import { useNavigate } from "react-router-dom";
-
+import Cookies from "universal-cookie";
+const cookies = new Cookies();
 function Cart() {
-  const { data, loading } = useSubscription(GETcart);
+  const uid = cookies.get("loginID");
+  const { data, loading } = useSubscription(GETcart, {
+    variables: {
+      uid: uid,
+    },
+  });
 
   const [list, setList] = useState();
   const [addLabel] = useMutation(AddHistoryLabel);
@@ -29,6 +35,7 @@ function Cart() {
   const subtotal = useSelector((state) => state.counter.subtotal);
   const services = useSelector((state) => state.counter.services);
   const sum = useSelector((state) => state.counter.total);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -62,6 +69,7 @@ function Cart() {
         id: uuid,
         total: sum,
         create_at: temp.toLocaleString(),
+        uid,
       },
     });
     lists?.map((i) => {
@@ -71,15 +79,23 @@ function Cart() {
           created_at: temp.toLocaleString(),
           qty: i.count,
           id_menu: i.menu.id,
+          uid,
         },
       });
     });
-    deleteCart();
+    deleteCart({
+      variables: {
+        uid: uid,
+      },
+    });
+    navigate("/history");
   };
 
   return (
-    <>
-      <Container style={{ width: "100vw", minHeight: "100vh" }}>
+    <div className="padd">
+      <Container
+        style={{ width: "100vw", paddingBottom: "150px", minHeight: "100vh" }}
+      >
         <Container style={{ margin: "auto" }}>
           {loading ? (
             <Loading />
@@ -145,14 +161,14 @@ function Cart() {
                       <Button
                         children={"Continue Shopping"}
                         butStyle={"secondary"}
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate("/menu")}
                       />
                       &nbsp;
                       <Button
                         children={"Checkout"}
                         butSize={"medium"}
                         onClick={() => handleCheckout(sum, list)}
-                      />{" "}
+                      />
                       &nbsp;
                     </div>
                   </div>
@@ -162,7 +178,7 @@ function Cart() {
           )}
         </Container>
       </Container>
-    </>
+    </div>
   );
 }
 
