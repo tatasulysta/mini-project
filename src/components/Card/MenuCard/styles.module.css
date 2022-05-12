@@ -6,16 +6,23 @@
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
+
+  padding: 10px;
 }
 .container {
   width: 200px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 1px 8px 6px -5px rgba(244, 124, 124, 1);
+  -webkit-box-shadow: 1px 8px 6px -5px rgba(244, 124, 124, 1);
+  -moz-box-shadow: 1px 8px 6px -5px rgba(244, 124, 124, 1);
 }
 .content {
   background-color: white;
   padding-left: 10px;
   font-family: "Poppins", "sans-serif";
   font-size: 13px;
-  border: 1px solid black;
+
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }

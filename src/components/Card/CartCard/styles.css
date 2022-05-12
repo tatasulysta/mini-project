@@ -1,3 +1,10 @@
-.image-cart {
-  width: 120px;
+.cart-card {
+  background-color: white;
+  border-bottom: 1px solid rgba(83, 83, 83, 0.5);
+  padding-top: 5px;
+}
+
+.delete {
+  cursor: pointer;
+  color: var(--primary-color);
 }

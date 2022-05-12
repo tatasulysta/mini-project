@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Loading from "../../Loading";
 import { useNavigate, useParams } from "react-router-dom";
 import HistoryCard from "../../Card/HistoryCard";
@@ -7,8 +7,10 @@ import { useQuery } from "@apollo/client";
 import InfoCard from "../../Card/InfoCard";
 import { Button } from "../../Button";
 import Cookies from "universal-cookie";
+import styles from "./styles.module.css";
+import NotFound from "../NotFound";
 const cookies = new Cookies();
-function History(props) {
+function History() {
   let params = useParams();
   const uid = cookies.get("loginID");
 
@@ -19,82 +21,91 @@ function History(props) {
       uid: uid,
     },
   });
-  const { data: total } = useQuery(GETtotal, {
+  const { data: label } = useQuery(GETtotal, {
     variables: {
-      id: params.historyId,
+      _eq: params.historyId,
+      _eq1: uid,
     },
   });
+  const [total, setTotal] = useState(0);
+
   const navigate = useNavigate();
   const handleBack = (path) => {
     navigate(path);
   };
-  useEffect(() => {}, [data]);
+  useEffect(() => {
+    if (data?.history_details.length !== 0) {
+      setTotal(label?.history_label[0].total);
+    }
+  }, [data, label]);
   if (loading) {
+    <Loading />;
   }
+
   let order = params.historyId;
   order = order.substring(0, order.indexOf("-"));
 
   return (
-    <div style={{ marginLeft: "10px" }} className="padd">
-      <div className="head">
-        <Button
-          onClick={() => handleBack("/history")}
-          children={"Back"}
-          butStyle="secondary"
-          butSize={"small"}
-        />
-        <h1
-          style={{
-            display: "inline-block",
-            margin: 0,
-            padding: 0,
-          }}
-        >
-          History Details
-        </h1>
-      </div>
-      <div className="content">
-        <div className="id">
-          <h3 style={{ color: "#535353", display: "inline-block" }}>
-            Order ID
-          </h3>
-          <span style={{ fontSize: "15px", color: "#535353" }}>
-            <b> #{order}</b>
-          </span>
-        </div>
-        <div className="inside">
-          {!loading &&
-            data?.history_details.map((i) => {
-              return (
-                <HistoryCard
-                  id={i.id_menu}
-                  title={i.menu.title}
-                  qty={i.qty}
-                  price={priceIDR.format(i.menu.price * i.qty)}
+    <>
+      {!loading && data?.history_details.length === 0 ? (
+        <NotFound />
+      ) : (
+        <div className="d-flex justify-content-center mt-5">
+          <div className={styles.historyContainer}>
+            <div className="id row">
+              <div className="col-9">
+                <h3 style={{ color: "#535353", display: "inline-block" }}>
+                  Order
+                </h3>
+                <span style={{ fontSize: "15px", color: "#535353" }}>
+                  <b> #{order}</b>
+                </span>
+              </div>
+              <div className="col-3 justify-content-end">
+                <Button
+                  onClick={() => handleBack("/history")}
+                  children={"Back"}
+                  butStyle="secondary"
+                  butSize={"small"}
+                  radius={"10px"}
                 />
-              );
-            })}
-        </div>
-        <br />
-        <div className="info-3">
-          <InfoCard
-            title="Subtotal"
-            styling="primary"
-            price={
-              total?.history_label_by_pk.total -
-              0.02 * total?.history_label_by_pk.total
-            }
-          />
+              </div>
+              <p style={{ color: "#535353" }}>
+                {data?.history_details[0].created_at}
+              </p>
+            </div>
+            <div className="inside ">
+              {!loading &&
+                data?.history_details.map((i) => {
+                  return (
+                    <HistoryCard
+                      id={i.id_menu}
+                      title={i.menu.title}
+                      qty={i.qty}
+                      price={priceIDR.format(i.menu.price * i.qty)}
+                    />
+                  );
+                })}
+            </div>
+            <br />
+            <div>
+              <InfoCard
+                title="Subtotal"
+                styling="primary"
+                price={total - 0.02 * total}
+              />
 
-          <InfoCard
-            title="Services (2%)"
-            styling="primary"
-            price={0.02 * total?.history_label_by_pk.total}
-          />
-          <InfoCard title="Total" price={total?.history_label_by_pk.total} />
+              <InfoCard
+                title="Services (2%)"
+                styling="primary"
+                price={0.02 * total}
+              />
+              <InfoCard title="Total" price={total} />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

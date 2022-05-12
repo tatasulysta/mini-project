@@ -10,7 +10,7 @@ function MenuCard(props) {
   return (
     <Col key={props.id}>
       <div className={style.container}>
-        <div style={{ backgroundColor: "white" }}>
+        <div>
           {ImageData.map((u) => {
             if (u.id === props.id) {
               return (
@@ -24,9 +24,15 @@ function MenuCard(props) {
           <p style={{ margin: 0 }} className={style.text}>
             <b>{props.title}</b>
           </p>
-          <Star star={props.star} id={props.id} />
-          <p>Rp. {priceIDR.format(props.price)}</p>
-          <Quantity id={props.id} />
+          {props.show ? (
+            <>
+              <Star star={props.star} id={props.id} />
+              <p>Rp. {priceIDR.format(props.price)}</p>
+              <Quantity id={props.id} />
+            </>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </Col>

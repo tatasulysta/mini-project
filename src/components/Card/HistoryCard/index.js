@@ -4,8 +4,8 @@ import { ImageData } from "../../../utils/ImageData";
 import "./style.css";
 function HistoryCard(props) {
   return (
-    <div>
-      <Row className="history-card">
+    <>
+      <Row className="history-card mt-0 ml-0 mr-0 ">
         <Col className="child-1">
           {ImageData.map((u) => {
             if (u.id === props.id) {
@@ -19,6 +19,7 @@ function HistoryCard(props) {
 
         <Col className="child-2">
           <Col>{props.title}</Col>
+
           <br />
           <Col
             style={{
@@ -29,11 +30,11 @@ function HistoryCard(props) {
             <b>Rp. {props.price}</b>
           </Col>
         </Col>
-        <Col>
-          <b>{props.qty} x</b>
+        <Col className="pad-0">
+          <b>Qty : {props.qty}</b>
         </Col>
       </Row>
-    </div>
+    </>
   );
 }
 

@@ -5,6 +5,7 @@ const initialState = {
   subtotal: 0,
   services: 0,
   total: 0,
+  items: 0,
 };
 
 export const counterSlice = createSlice({

@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client";
 const GETmenu = gql`
-  query MyQuery($_eq: Int = 1) {
-    menu(where: { category: { id: { _eq: $_eq } } }) {
+  query MyQuery {
+    menu(order_by: { id: asc }) {
       id_category
       id
       price
@@ -76,7 +76,6 @@ const GEThistories = gql`
       order_by: { created_at: asc }
     ) {
       created_at
-      id
       id_label
       id_menu
       menu {
@@ -88,8 +87,8 @@ const GEThistories = gql`
   }
 `;
 const GETtotal = gql`
-  query MyQuery($id: uuid!) {
-    history_label_by_pk(id: $id) {
+  query MyQuery($_eq: uuid!, $_eq1: uuid!) {
+    history_label(where: { id: { _eq: $_eq }, uid: { _eq: $_eq1 } }) {
       total
     }
   }

@@ -4,7 +4,7 @@ import CartCard from "../../Card/CartCard";
 import { GETcart } from "../../../GraphQL/subscription";
 import { useMutation, useSubscription } from "@apollo/client";
 import InfoCard from "../../Card/InfoCard";
-import { total } from "../../../features/counterSlice";
+import { total } from "../../../store/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Button } from "../../Button";
@@ -14,6 +14,7 @@ import {
   AddHistoryDetails,
   DeleteCart,
 } from "../../../GraphQL/mutation";
+import style from "./styles.module.css";
 import Loading from "../../Loading";
 import NoItems from "../NoItems";
 import { useNavigate } from "react-router-dom";
@@ -41,6 +42,9 @@ function Cart() {
 
   useEffect(() => {}, [loading]);
   useEffect(() => {}, [data]);
+  useEffect(() => {
+    console.log(list);
+  }, [list]);
 
   useEffect(() => {
     setList(data?.Cart);
@@ -61,28 +65,27 @@ function Cart() {
   }, [list, dispatch]);
   const handleCheckout = (sum, list) => {
     const temp = new Date();
-
     const uuid = uuidv4();
-    const lists = list;
     addLabel({
       variables: {
         id: uuid,
         total: sum,
         create_at: temp.toLocaleString(),
-        uid,
+        uid: uid,
       },
     });
-    lists?.map((i) => {
+    list?.map((i) => {
       return addHistory({
         variables: {
-          id_label: uuid,
           created_at: temp.toLocaleString(),
-          qty: i.count,
+          id_label: uuid,
           id_menu: i.menu.id,
-          uid,
+          qty: i.count,
+          uid: uid,
         },
       });
     });
+
     deleteCart({
       variables: {
         uid: uid,
@@ -92,91 +95,89 @@ function Cart() {
   };
 
   return (
-    <div className="padd">
-      <Container
-        style={{ width: "100vw", paddingBottom: "150px", minHeight: "100vh" }}
-      >
-        <Container style={{ margin: "auto" }}>
-          {loading ? (
-            <Loading />
-          ) : (
-            <>
-              {!loading && state ? (
-                <NoItems title={"Cart is Empty!"} />
-              ) : (
-                <>
-                  <Row
-                    style={{
-                      borderBottom: "1.5px solid black",
-                      paddingBottom: "10px",
-                      paddingTop: "15px",
-                      fontFamily: "poppins, sans-serif",
-                      marginBottom: "20px",
-                    }}
-                  >
-                    <Col lg={2}></Col>
-                    <Col lg={4}>Item</Col>
-                    <Col lg={1} className="mx-auto">
+    <div style={{ backgroundColor: "white", paddingBottom: "250px" }}>
+      <h1 className="quantity">Cart</h1>
+      <Container className={style.container}>
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            {!loading && state ? (
+              <NoItems title={"Cart is Empty!"} />
+            ) : (
+              <>
+                <Row className={style.tableContainer}>
+                  <span className="close">
+                    <Col lg={2} md={2}>
+                      {""}
+                    </Col>
+                    <Col lg={3} md={3} className="mx-auto ">
+                      Item
+                    </Col>
+
+                    <Col lg={2} md={2} className="mx-auto ">
                       Quantity
                     </Col>
-                    <Col lg={1} className="mx-auto">
-                      Delete
-                    </Col>
-                    <Col lg={2} className="mx-auto">
+
+                    <Col lg={2} md={2} className="mx-auto ">
                       Price
                     </Col>
-                  </Row>
-                  {list?.map((i) => {
-                    return (
-                      <CartCard
-                        id={i.id_menu}
-                        count={i.count}
-                        price={i.menu.price}
-                        title={i.menu.title}
-                      />
-                    );
-                  })}
-                  <div className="info">
-                    <div>
-                      <br />
-                      <InfoCard
-                        title={"Subtotal"}
-                        price={subtotal}
-                        styling={"primary"}
-                      />
-                      &nbsp;
-                      <InfoCard
-                        title={"Service (2%)"}
-                        price={services}
-                        styling={"primary"}
-                      />
-                      &nbsp;
-                      <InfoCard
-                        title={"Total"}
-                        price={sum}
-                        styling={"secondary"}
-                      />
-                    </div>
-                    <div className="info-2">
-                      <Button
-                        children={"Continue Shopping"}
-                        butStyle={"secondary"}
-                        onClick={() => navigate("/menu")}
-                      />
-                      &nbsp;
-                      <Button
-                        children={"Checkout"}
-                        butSize={"medium"}
-                        onClick={() => handleCheckout(sum, list)}
-                      />
-                      &nbsp;
-                    </div>
+                    <Col lg={2} md={2} className="mx-auto ">
+                      Delete
+                    </Col>
+                  </span>
+                </Row>
+                {list?.map((i) => {
+                  return (
+                    <CartCard
+                      id={i.id_menu}
+                      count={i.count}
+                      price={i.menu.price}
+                      title={i.menu.title}
+                    />
+                  );
+                })}
+                {loading && <h1>loadingg</h1>}
+                <div className="info">
+                  <div>
+                    <br />
+                    <InfoCard
+                      title={"Subtotal"}
+                      price={subtotal}
+                      styling={"primary"}
+                    />
+                    &nbsp;
+                    <InfoCard
+                      title={"Service (2%)"}
+                      price={services}
+                      styling={"primary"}
+                    />
+                    &nbsp;
+                    <InfoCard
+                      title={"Total"}
+                      price={sum}
+                      styling={"secondary"}
+                    />
                   </div>
-                </>
-              )}
-            </>
-          )}
-        </Container>
+                  <div className="info-2">
+                    <Button
+                      children={"Continue Shopping"}
+                      butStyle={"secondary"}
+                      onClick={() => navigate("/menu")}
+                    />
+                    &nbsp;
+                    <Button
+                      children={"Checkout"}
+                      butSize={"medium"}
+                      onClick={() => handleCheckout(sum, list)}
+                    />
+                    &nbsp;
+                  </div>
+                </div>
+              </>
+            )}
+          </>
+        )}
       </Container>
     </div>
   );

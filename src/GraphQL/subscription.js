@@ -15,8 +15,8 @@ const GETcart = gql`
   }
 `;
 const GETcartID = gql`
-  subscription MySubscription {
-    Cart {
+  subscription MySubscription($_eq: uuid!) {
+    Cart(where: { uid: { _eq: $_eq } }) {
       id_menu
     }
   }

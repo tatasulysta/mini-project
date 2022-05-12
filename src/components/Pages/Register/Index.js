@@ -7,6 +7,17 @@ import Cookies from "universal-cookie";
 import { Button } from "../../Button";
 import "../Login/style.css";
 import { Modal } from "react-bootstrap";
+import MainNav from "../../MainNav";
+import Lottie from "react-lottie";
+import loading from "../../../lotties/loading.json";
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: loading,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
 
 const cookie = new Cookies();
 function Login() {
@@ -50,6 +61,7 @@ function Login() {
 
   return (
     <>
+      <MainNav styles={"secondary"} title={"Login"} />
       <div className="d-flex justify-content-center container-log">
         <div className="container container-fluid my-auto p-4 container-log-inside">
           <div className="row ">
@@ -130,7 +142,13 @@ function Login() {
                   <p>
                     Already have an account? <a href="/login">Login</a>
                   </p>
-                  {loading && <h1>loadingg... </h1>}
+                  {loading && (
+                    <Lottie
+                      options={defaultOptions}
+                      // height={"100px"}
+                      width={"100px"}
+                    />
+                  )}
                 </div>
               </div>
             </div>

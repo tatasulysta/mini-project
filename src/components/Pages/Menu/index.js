@@ -20,8 +20,7 @@ import {
 
 import { Button } from "../../Button/index";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { set } from "../../../features/uidSlice";
+import { useSelector } from "react-redux";
 import Lottie from "react-lottie";
 import searching from "../../../lotties/searching.json";
 import searchNotFound from "../../../lotties/searchNotFound.json";
@@ -32,10 +31,9 @@ const cookies = new Cookies();
 function Menu() {
   // Global state
   const counter = useSelector((state) => state.counter.value);
-  const dispatch = useDispatch();
+  const uid = cookies.get("loginID");
   useEffect(() => {
     document.title = "Menu";
-    dispatch(set(cookies.get("loginID")));
   });
 
   //state & hooks
@@ -51,12 +49,17 @@ function Menu() {
   const { data: resBurger, loading: loadBurger } = useQuery(GETburger);
   const { data: resDrink, loading: loadDrink } = useQuery(GETdrink);
   const { data: resSnack, loading: loadSnack } = useQuery(GETsnack);
-  const { data: resCart } = useSubscription(GETcartID);
+  const { data: resCart } = useSubscription(GETcartID, {
+    variables: {
+      _eq: uid,
+    },
+  });
   const [fetchDatabyName, { data, loading }] = useLazyQuery(GETmenuByName, {
     notifyOnNetworkStatusChange: true,
   });
-  const [addCart] = useMutation(Addcart);
-  const [updateCart] = useMutation(UpdateCart);
+  const [addCart, { data: dataAdd }] = useMutation(Addcart);
+  const [updateCart, { data: dataUpdate, loading: loadUp }] =
+    useMutation(UpdateCart);
 
   const handleClick = (what) => {
     setSelect(what);
@@ -96,15 +99,24 @@ function Menu() {
     setID(temp);
   }, [resCart]);
   useEffect(() => {
+    console.log("from that");
+    console.log(dataAdd?.insert_Cart);
+    console.log(dataUpdate);
+    console.log(loadUp);
+  }, [dataAdd, dataUpdate, loadUp]);
+
+  useEffect(() => {
     if (counter.length === 0) {
       setAdd(false);
     } else {
       setAdd(true);
     }
+    let banyak = 0;
+    counter.map((i) => (banyak += i.count));
+    console.log(banyak);
   }, [counter]);
 
   const handleAddcart = () => {
-    let uid = cookies.get("loginID");
     let notIn = [];
     let inIT = [];
 
@@ -125,17 +137,20 @@ function Menu() {
         },
       });
     });
+
     notIn.map((obj) => {
-      return addCart({
-        variables: {
-          count: obj.count,
-          id_menu: obj.id,
-          uid: uid,
-        },
-      });
+      if (obj.count !== 0) {
+        return addCart({
+          variables: {
+            count: obj.count,
+            id_menu: obj.id,
+            uid: uid,
+          },
+        });
+      }
+      return 0;
     });
-    navigate("/cart");
-    window.location.reload();
+    // navigate("/cart");
   };
   const defaultOptions = {
     loop: true,
@@ -266,7 +281,7 @@ function Menu() {
                   </h5>
                 </>
               ) : (
-                <MenuContainer data={list} />
+                <MenuContainer data={list} show={true} />
               )}
             </>
           ) : (

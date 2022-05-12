@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { GETuser } from "../../../GraphQL/query";
 import Cookies from "universal-cookie";
 import { Button } from "../../Button";
+import MainNav from "../../MainNav";
 import "./style.css";
 const cookie = new Cookies();
 function Login() {
@@ -25,6 +26,7 @@ function Login() {
         password: data.password,
       },
     });
+    console.log("click");
   };
 
   useEffect(() => {}, [data, dataUser]);
@@ -45,6 +47,7 @@ function Login() {
 
   return (
     <>
+      <MainNav styles={"secondary"} title={"Register"} />
       <div className="d-flex justify-content-center container-log">
         <div className="container container-fluid my-auto p-4 container-log-inside">
           <div className="row ">

@@ -15,10 +15,17 @@ function MenuContainer(props) {
     <div className="menu-container">
       <Swiper
         breakpoints={{
-          480: {
+          350: {
             slidesPerView: 1,
           },
+          480: {
+            slidesPerView: 2,
+          },
+
           768: {
+            slidesPerView: 3,
+          },
+          1023: {
             slidesPerView: 3,
           },
           1279: {
@@ -38,6 +45,7 @@ function MenuContainer(props) {
                 title={i.title}
                 price={i.price}
                 star={i.star}
+                show={props.show}
               />
             </SwiperSlide>
           );

@@ -1,8 +1,7 @@
 import style from "./styles.module.css";
 import React, { useEffect, useState } from "react";
-import { add, increment, decrement } from "../../features/counterSlice";
+import { add, increment, decrement } from "../../store/counterSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { offsetLimitPagination } from "@apollo/client/utilities";
 
 function Quantity(props) {
   const counter = useSelector((state) => state.counter.value);
