@@ -1,10 +1,98 @@
-.App {
-  width: 100vh;
-}
 :root {
   --primary-color: #fea82f;
   --background: #f9f9fb;
+  --secondary-color: #fbf1e6;
+  --accent-color: #aa8023;
+  --warning: #ef5353;
 }
-.App {
+.f-primary {
+  color: var(--primary-color);
+}
+h1 {
+  margin: 12px 0px 0px 50px;
+  color: #535353;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 600 !important;
+}
+.content {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+.inside {
+  margin-top: 20px;
+  margin-left: 10px;
+}
+.app {
+  min-height: 100vh;
   background-color: var(--background);
+}
+.padd {
+  padding-bottom: 150px;
+}
+body {
+  background-color: var(--background);
+}
+.info {
+  float: right;
+}
+.info-2 {
+  float: right;
+  margin-right: 0;
+  padding-right: 0;
+  margin-top: 10px;
+}
+.info-3 {
+  float: left;
+}
+.quantity {
+  display: none;
+}
+.close {
+  display: flex;
+}
+.brandname {
+  font-family: "Ubuntu", sans-serif;
+  color: #535353;
+}
+.brand {
+  cursor: pointer;
+}
+.links {
+  color: #535353;
+  text-decoration: none;
+  font-weight: 500;
+}
+.links:hover {
+  color: #aa8023;
+}
+.bg-no {
+  background-color: #f9fbf2 !important;
+}
+footer {
+  background-color: white;
+}
+.error {
+  text-decoration: none;
+  color: var(--warning);
+  padding-left: 0;
+}
+.error > li {
+  list-style-type: none;
+}
+@media only screen and (max-width: 800px) {
+  .info-2 {
+    float: left;
+  }
+  .info {
+    float: left;
+  }
+  .quantity {
+    display: flex;
+  }
+  .close {
+    display: none;
+  }
+  .links {
+    font-size: small;
+  }
 }

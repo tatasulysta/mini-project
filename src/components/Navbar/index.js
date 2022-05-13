@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsCart2 } from "react-icons/bs";
 import { VscHistory } from "react-icons/vsc";
 import { Navbar, Container, NavbarBrand } from "react-bootstrap";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./style.module.css";
 
@@ -15,7 +14,7 @@ function Navibar() {
         <Container>
           <NavbarBrand>
             <NavLink
-              to="/"
+              to="/menu"
               style={({ isActive }) => {
                 return {
                   color: isActive ? "white" : "var(--primary-color)",

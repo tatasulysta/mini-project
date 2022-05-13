@@ -1,0 +1,9 @@
+.cart-card {
+  background-color: white;
+  border-bottom: 1px solid rgba(83, 83, 83, 0.5);
+}
+
+.delete {
+  cursor: pointer;
+  color: var(--primary-color);
+}

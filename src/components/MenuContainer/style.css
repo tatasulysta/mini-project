@@ -1,0 +1,10 @@
+.menu-container {
+  width: 90%;
+  margin: auto;
+}
+@media only screen and (max-width: 600px) {
+  .menu-container {
+    width: 200px;
+    margin: auto;
+  }
+}
