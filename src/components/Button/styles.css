@@ -1,7 +1,9 @@
-.btn {
-  border-radius: 7px;
-  outline: none;
+.btns {
+  border-radius: 10px;
+
   cursor: pointer;
+
+  border: none;
 }
 .primary {
   color: white;
@@ -9,7 +11,7 @@
 }
 .secondary {
   color: var(--primary-color);
-  background-color: none;
+  background: none;
   border: 2px solid var(--primary-color);
 }
 .small {
@@ -25,6 +27,10 @@
 .medium {
   padding: 0px 30px;
   height: 50px;
+}
+.btn-disable {
+  background-color: #7f5f19;
+  cursor: not-allowed !important;
 }
 @media only screen and (max-width: 600px) {
   .medium {

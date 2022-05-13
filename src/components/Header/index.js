@@ -37,23 +37,25 @@ function Header(props) {
   }, [data]);
 
   return (
-    <Navbar>
-      <Container style={{ borderBottom: "1px solid var(--primary-color)" }}>
+    <Navbar style={{ backgroundColor: "white", marginBottom: "10px" }}>
+      <Container>
         <Navbar.Brand href="/">
           <img
             src="assets/images/logo.png"
             alt=""
             style={{ width: "40px", display: "inline-block" }}
           />
+          <span className="brandname">&nbsp; Briskly</span>
         </Navbar.Brand>
-        <form style={{ width: "90%" }}>
+
+        <form className="d-flex">
           <input
             type="text"
             value={temp}
             onChange={handleChange}
             name=""
             id=""
-            placeholder="food name"
+            placeholder="Search"
             className={styles.bar}
           />
           <button
@@ -68,14 +70,6 @@ function Header(props) {
           <NavDropdown title={`Hi,${name} `} id="basic-nav-dropdown">
             <NavDropdown.Item onClick={() => handleLogout()}>
               Logout
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">
-              Another action
-            </NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">
-              Separated link
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>

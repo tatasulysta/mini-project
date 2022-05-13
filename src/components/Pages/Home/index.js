@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { Navbar, Container } from "react-bootstrap";
+import { Navbar, Container, Nav } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../Button";
 import style from "./styles.module.css";
 import { GETmenu } from "../../../GraphQL/query";
 import MenuContainer from "../../MenuContainer/Index";
 import { useQuery } from "@apollo/client";
+import Helmet from "react-helmet";
 function Home() {
   const navigate = useNavigate();
   const [list, setList] = useState();
 
   const { data } = useQuery(GETmenu);
   useEffect(() => {
-    // setList(data?.menu);
-    console.log(data?.menu);
     setList(data?.menu);
   }, [data?.menu]);
 
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Briskly</title>
+      </Helmet>
       <Navbar bg="light">
         <Container>
           <Navbar.Brand
@@ -30,11 +33,21 @@ function Home() {
             <img src="assets/images/logo.png" alt="" className="logo" />
             <span className="brandname">&nbsp; Briskly</span>
           </Navbar.Brand>
-          <div className="justify-content-end">
+          <Nav className="justify-content-end flex-grow-1 pe-3">
+            <a href="#menu" className="links">
+              Menu
+            </a>
+            &nbsp; &nbsp;
+            <a href="#how" className="links">
+              How it Works
+            </a>
+          </Nav>
+          <Nav>
             <Button
               children={"Login"}
               butSize={"small"}
               radius={"10px"}
+              able={true}
               onClick={() => navigate("/login")}
             />
             &nbsp;&nbsp;
@@ -43,9 +56,10 @@ function Home() {
               butSize={"small"}
               butStyle={"secondary"}
               radius={"10px"}
+              able={true}
               onClick={() => navigate("/register")}
             />
-          </div>
+          </Nav>
         </Container>
       </Navbar>
       <Container>
@@ -67,6 +81,7 @@ function Home() {
               <Button
                 children={"Get Started"}
                 radius="10px"
+                able={true}
                 onClick={() => navigate("/login")}
               />
             </div>
@@ -81,11 +96,16 @@ function Home() {
           </div>
         </div>
       </Container>
-      <Container>
-        <h3> Menu </h3>
-        <MenuContainer data={list} show={false} />
+      <Container id="menu" className={style.menu}>
+        <div className={`justify-content-center ${style.secondPage} mx-auto`}>
+          <h3 className={style.title}>
+            Explore <span style={{ color: "var(--primary-color)" }}>Menu</span>
+          </h3>{" "}
+          <br />
+          <MenuContainer data={list} show={false} styles={"bg-no"} />
+        </div>
       </Container>
-      <Container id={style.how}>
+      <Container className={style.how} id="how">
         <div className={`justify-content-center ${style.secondPage} mx-auto`}>
           <h2 className={style.title} style={{ color: "var(--primary-color)" }}>
             How It Works
@@ -183,6 +203,14 @@ function Home() {
           </div>
         </div>
       </Container>
+      <footer className=" f-primary text-center text-lg-start">
+        <div className="text-center p-3">
+          © 2022 Copyright
+          <span>
+            &nbsp; <b>Briskly</b>
+          </span>
+        </div>
+      </footer>
     </>
   );
 }

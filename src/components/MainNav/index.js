@@ -24,6 +24,7 @@ function MainNav(props) {
             butSize={"small"}
             butStyle={props.styles}
             radius={"10px"}
+            able={true}
             onClick={() => navigate(`/${title}`)}
           />
         </div>

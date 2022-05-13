@@ -19,7 +19,7 @@ function MenuContainer(props) {
             slidesPerView: 1,
           },
           480: {
-            slidesPerView: 2,
+            slidesPerView: 3,
           },
 
           768: {
@@ -46,6 +46,7 @@ function MenuContainer(props) {
                 price={i.price}
                 star={i.star}
                 show={props.show}
+                styles={props.styles}
               />
             </SwiperSlide>
           );

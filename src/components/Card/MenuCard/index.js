@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import style from "./styles.module.css";
 import { Col } from "react-bootstrap";
 import Star from "../../Star/Index";
@@ -9,7 +9,7 @@ function MenuCard(props) {
 
   return (
     <Col key={props.id}>
-      <div className={style.container}>
+      <div className={`${props.styles} ${style.container}`}>
         <div>
           {ImageData.map((u) => {
             if (u.id === props.id) {
@@ -21,12 +21,14 @@ function MenuCard(props) {
           })}
         </div>
         <div className={style.content}>
-          <p style={{ margin: 0 }} className={style.text}>
+          <p style={{ margin: 0 }} className={`${style.text} ${props.styles}`}>
             <b>{props.title}</b>
           </p>
           {props.show ? (
             <>
-              <Star star={props.star} id={props.id} />
+              <div key={props.id}>
+                <Star star={props.star} id={props.id} />
+              </div>
               <p>Rp. {priceIDR.format(props.price)}</p>
               <Quantity id={props.id} />
             </>

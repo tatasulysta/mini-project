@@ -38,6 +38,7 @@ function HistoryLabel(props) {
             children={"View Details"}
             butSize={"small"}
             radius={"10px"}
+            able={true}
             onClick={() => navigate(`/history/${props.id}`)}
           />
         </Col>

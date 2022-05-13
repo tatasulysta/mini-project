@@ -24,6 +24,7 @@ function NoItems(props) {
           children={"Continue Shopping"}
           butStyle={"secondary"}
           onClick={() => navigate("/menu")}
+          able={true}
         />
       </div>
     </div>

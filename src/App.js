@@ -1,6 +1,5 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Navibar from "./components/Navbar";
 import Menu from "./components/Pages/Menu";
 import History from "./components/Pages/History";
 import Histories from "./components/Pages/Histories";

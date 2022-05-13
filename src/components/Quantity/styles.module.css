@@ -1,8 +1,3 @@
-/* .inline,
-.decre,
-.incre {
-  display: inline-block;
-} */
 .wrapper {
   display: flex;
   justify-content: space-between;
@@ -16,14 +11,13 @@
 .incre,
 .decre2 {
   color: white;
-
   border: none;
   width: 30px;
   height: 30px;
   border-radius: 50px;
 }
 .decre2 {
-  background-color: #aa8023;
+  background-color: var(--accent-color);
   cursor: not-allowed !important;
 }
 .decre,

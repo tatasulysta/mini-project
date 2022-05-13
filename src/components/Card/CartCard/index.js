@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { ImageData } from "../../../utils/ImageData";
 import "./styles.css";
-import { useSelector } from "react-redux";
 import { useMutation, useSubscription } from "@apollo/client";
 import { GETcartID } from "../../../GraphQL/subscription";
 import { DeleteCartItems } from "../../../GraphQL/mutation";
@@ -10,11 +9,8 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import Cookies from "universal-cookie";
 const cookies = new Cookies();
 function CartCard(props) {
-  const counter = useSelector((state) => state.counter.value);
   const uid = cookies.get("loginID");
   const { data: resCart } = useSubscription(GETcartID);
-
-  const [id, setID] = useState([]);
   const [deleteById] = useMutation(DeleteCartItems);
 
   useEffect(() => {
@@ -22,7 +18,6 @@ function CartCard(props) {
     let temp2 = [];
     resCart?.Cart.map((i) => temp.push(i.id_menu));
     resCart?.Cart.map((i) => temp2.push(i.count));
-    setID(temp);
   }, [resCart]);
   const handleDelete = () => {
     deleteById({

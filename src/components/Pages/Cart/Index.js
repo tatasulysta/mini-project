@@ -19,6 +19,7 @@ import Loading from "../../Loading";
 import NoItems from "../NoItems";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
+import Helmet from "react-helmet";
 const cookies = new Cookies();
 function Cart() {
   const uid = cookies.get("loginID");
@@ -39,12 +40,6 @@ function Cart() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {}, [loading]);
-  useEffect(() => {}, [data]);
-  useEffect(() => {
-    console.log(list);
-  }, [list]);
 
   useEffect(() => {
     setList(data?.Cart);
@@ -96,6 +91,10 @@ function Cart() {
 
   return (
     <div style={{ backgroundColor: "white", paddingBottom: "250px" }}>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Briskly - Cart</title>
+      </Helmet>
       <h1 className="quantity">Cart</h1>
       <Container className={style.container}>
         {loading ? (
@@ -134,6 +133,7 @@ function Cart() {
                       count={i.count}
                       price={i.menu.price}
                       title={i.menu.title}
+                      key={i.id}
                     />
                   );
                 })}
@@ -164,11 +164,13 @@ function Cart() {
                       children={"Continue Shopping"}
                       butStyle={"secondary"}
                       onClick={() => navigate("/menu")}
+                      able={true}
                     />
                     &nbsp;
                     <Button
                       children={"Checkout"}
                       butSize={"medium"}
+                      able={true}
                       onClick={() => handleCheckout(sum, list)}
                     />
                     &nbsp;

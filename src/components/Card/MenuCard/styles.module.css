@@ -17,6 +17,14 @@
   -webkit-box-shadow: 1px 8px 6px -5px rgba(244, 124, 124, 1);
   -moz-box-shadow: 1px 8px 6px -5px rgba(244, 124, 124, 1);
 }
+.container2 {
+  width: 200px;
+  background-color: none;
+  border-radius: 10px;
+  box-shadow: 1px 8px 6px -5px rgba(244, 124, 124, 1);
+  -webkit-box-shadow: 1px 8px 6px -5px rgba(244, 124, 124, 1);
+  -moz-box-shadow: 1px 8px 6px -5px rgba(244, 124, 124, 1);
+}
 .content {
   background-color: white;
   padding-left: 10px;

@@ -2,9 +2,9 @@
   background-color: white;
   min-height: 100vh;
   min-width: 50vw;
+  padding-bottom: 150px;
 }
 .tableContainer {
-  padding-bottom: 10px;
   padding-top: 10px;
   color: #535353;
   font-family: "Source Sans Pro", sans-serif;

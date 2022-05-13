@@ -7,6 +7,7 @@ import Loading from "../../Loading";
 import { Row } from "react-bootstrap";
 import NoItems from "../NoItems";
 import Cookies from "universal-cookie";
+import Helmet from "react-helmet";
 const cookies = new Cookies();
 
 function Histories() {
@@ -17,12 +18,8 @@ function Histories() {
     },
   });
   const [state, setState] = useState(false);
-
   const params = useParams();
 
-  useEffect(() => {
-    document.title = "History";
-  }, []);
   useEffect(() => {
     let id = [];
     data?.history_label.map((i) => {
@@ -35,6 +32,10 @@ function Histories() {
   }
   return (
     <div style={{ backgroundColor: "var(--background)" }} className="padd">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Briskly - History</title>
+      </Helmet>
       {!loading && state ? (
         <NoItems title={"No transaction yet"} />
       ) : (

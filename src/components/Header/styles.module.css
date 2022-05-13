@@ -1,27 +1,38 @@
 .bar {
   border: none;
-  caret-color: var(--primary-color);
   display: inline-block;
-  width: 40%;
+  width: 40vw;
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  margin-right: 2px;
 }
 .bar:focus {
-  outline: none;
-  border: 1px solid var(--primary-color);
+  background-color: white;
+  caret-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  border: none;
+  outline-color: var(--primary-color);
 }
 ::placeholder {
-  color: #c4c4c4;
+  color: white;
   opacity: 1; /* Firefox */
 }
 
 :-ms-input-placeholder {
-  color: #c4c4c4;
+  color: white;
 }
 
 ::-ms-input-placeholder {
-  color: #c4c4c4;
+  color: white;
 }
 .button {
   background-color: white;
   border: none;
-  color: #535353;
+  color: var(--primary-color);
+}
+@media screen and (max-width: 600px) {
+  .bar {
+    width: 30vw;
+  }
 }

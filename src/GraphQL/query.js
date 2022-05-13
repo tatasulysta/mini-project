@@ -76,6 +76,7 @@ const GEThistories = gql`
       order_by: { created_at: asc }
     ) {
       created_at
+      id
       id_label
       id_menu
       menu {

@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 const GETcart = gql`
   subscription MySubscription($uid: uuid!) {
     Cart(where: { uid: { _eq: $uid } }, order_by: { id: asc }) {
+      id
       count
       id_menu
       menu {

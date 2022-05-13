@@ -9,6 +9,7 @@ import { Button } from "../../Button";
 import Cookies from "universal-cookie";
 import styles from "./styles.module.css";
 import NotFound from "../NotFound";
+import Helmet from "react-helmet";
 const cookies = new Cookies();
 function History() {
   let params = useParams();
@@ -47,6 +48,10 @@ function History() {
 
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Briskly - History</title>
+      </Helmet>
       {!loading && data?.history_details.length === 0 ? (
         <NotFound />
       ) : (
@@ -64,6 +69,7 @@ function History() {
               <div className="col-3 justify-content-end">
                 <Button
                   onClick={() => handleBack("/history")}
+                  able={true}
                   children={"Back"}
                   butStyle="secondary"
                   butSize={"small"}
@@ -79,6 +85,7 @@ function History() {
                 data?.history_details.map((i) => {
                   return (
                     <HistoryCard
+                      key={i.id}
                       id={i.id_menu}
                       title={i.menu.title}
                       qty={i.qty}

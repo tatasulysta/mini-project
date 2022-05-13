@@ -47,16 +47,19 @@ function Quantity(props) {
         setCount(temp);
       }
     }
-  });
+  }, [count, counter, props.id]);
   return (
     <>
       <div className={style.wrapper}>
-        <button
-          className={count !== 0 ? style.decre : style.decre2}
-          onClick={handleDecre}
-        >
-          -
-        </button>
+        {count !== 0 ? (
+          <button className={style.decre} onClick={handleDecre}>
+            -
+          </button>
+        ) : (
+          <button disabled className={style.decre2} onClick={handleDecre}>
+            -
+          </button>
+        )}
         <span>{count}</span>
         <button className={style.incre} onClick={handleIncre}>
           +

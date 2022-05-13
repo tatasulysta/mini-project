@@ -1,25 +1,15 @@
 import { useLazyQuery, useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GETuser, GETemail } from "../../../GraphQL/query";
+import { GETemail } from "../../../GraphQL/query";
 import { Adduser } from "../../../GraphQL/mutation";
-import Cookies from "universal-cookie";
+
 import { Button } from "../../Button";
 import "../Login/style.css";
 import { Modal } from "react-bootstrap";
 import MainNav from "../../MainNav";
-import Lottie from "react-lottie";
-import loading from "../../../lotties/loading.json";
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: loading,
-  rendererSettings: {
-    preserveAspectRatio: "xMidYMid slice",
-  },
-};
+import useDebounce from "../../../hooks/useDebounce";
 
-const cookie = new Cookies();
 function Login() {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -27,14 +17,44 @@ function Login() {
     username: "",
     password: "",
   });
-  const [show, setShow] = useState(false);
-  const [error, setErr] = useState({
+  const [err, setErr] = useState({
+    username: "",
     email: "",
+    password: "",
   });
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
-  };
+  const [show, setShow] = useState(false);
+  const [able, setAble] = useState(false);
+  const [getData, { data: search }] = useLazyQuery(GETemail);
   const [addUser, { data: done, loading }] = useMutation(Adduser);
+  const emailRex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
+
+  const handleChange = (e) => {
+    const key = e.target.name;
+    const val = e.target.value;
+    setData({ ...data, [e.target.name]: e.target.value });
+    if (key === "username") {
+      if (val.length < 4) {
+        setErr({ ...err, username: "Username is too short" });
+      } else {
+        setErr({ ...err, username: "" });
+      }
+    }
+    if (key === "email") {
+      if (!emailRex.test(val)) {
+        setErr({ ...err, email: "Email is invalid" });
+      } else {
+        setErr({ ...err, email: "" });
+      }
+    }
+    if (key === "password") {
+      if (val.length < 5) {
+        setErr({ ...err, password: "password is too short" });
+      } else {
+        setErr({ ...err, password: "" });
+      }
+    }
+  };
+
   const register = (e) => {
     e.preventDefault();
     addUser({
@@ -45,19 +65,45 @@ function Login() {
       },
     });
   };
-  useEffect(() => {
-    if (done?.insert_user.affected_rows === 1) {
-      //   alert("berhasil");
-      //   navigate("/login");
-      setShow(true);
-    }
-  }, [done]);
   const handleClose = () => {
     setShow(false);
   };
   useEffect(() => {
-    console.log(data);
-  }, [data]);
+    if (done?.insert_user.affected_rows === 1) {
+      setShow(true);
+    }
+  }, [done]);
+
+  useEffect(() => {
+    if (data.email === "" && data.password === "" && data.username === "") {
+      setAble(false);
+    } else if (err.email === "" && err.username === "" && err.password === "") {
+      setAble(true);
+    } else {
+      setAble(false);
+    }
+  }, [data, err]);
+  useEffect(() => {}, [search]);
+  const debounces = useDebounce(data.email, 1000);
+  useEffect(() => {
+    getData({
+      variables: {
+        _eq: debounces,
+      },
+    });
+    if (err.email === "") {
+      if (search?.user.length === 0) {
+        setErr({ ...err, email: "" });
+      } else {
+        if (search?.user[0].email === debounces) {
+          setErr({ ...err, email: "Email is already registered" });
+        } else {
+          setErr({ ...err, email: "" });
+        }
+      }
+    }
+    // eslint-disable-next-line
+  }, [debounces, search]);
 
   return (
     <>
@@ -72,16 +118,27 @@ function Login() {
               <img
                 src="./assets/images/register.png"
                 alt=""
-                srcset=""
                 className="img-fluid"
               />
             </div>
             <div className="col-md-8 contents" style={{ background: "white" }}>
               <div className="row justify-content-center">
                 <div className="col-md-8">
-                  <div className="mb-4">
-                    <h3>Welcome !</h3>
-                    <p className="mb-4">register your account</p>
+                  <div className="mb-4 row">
+                    <div className="col-lg-10 col-sm-9 col-md-9 col-8">
+                      <h3>Welcome !</h3>
+                      <p className="mb-4">register your account</p>
+                    </div>
+
+                    {loading && (
+                      <div className="col-lg-2 col-sm-3 col-md-3 col-3">
+                        <img
+                          src="assets/loading.gif"
+                          style={{ width: "90px" }}
+                          alt=""
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <form
@@ -89,7 +146,7 @@ function Login() {
                     onSubmit={register}
                   >
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlfor="email">
+                      <label className="form-label" htmlFor="email">
                         Email
                         <input
                           type="email"
@@ -97,12 +154,13 @@ function Login() {
                           name="email"
                           placeholder="email"
                           className="form-control"
+                          required
                           onChange={(e) => handleChange(e)}
                         />
                       </label>
                     </div>
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlfor="username">
+                      <label className="form-label" htmlFor="username">
                         Username
                         <input
                           type="text"
@@ -110,17 +168,19 @@ function Login() {
                           name="username"
                           className="form-control"
                           placeholder="username"
+                          required
                           onChange={(e) => handleChange(e)}
                         />
                       </label>
                     </div>
 
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlfor="password">
+                      <label className="form-label" htmlFor="password">
                         Password
                         <input
                           type="text"
                           id="password"
+                          required
                           name="password"
                           className="form-control"
                           placeholder="password"
@@ -128,7 +188,24 @@ function Login() {
                         />
                       </label>
                     </div>
+                    <ul className="error">
+                      {err.email !== "" && (
+                        <li>
+                          {err.email} <br />
+                        </li>
+                      )}
+                      {err.username !== "" && (
+                        <li>
+                          {err.username} <br />
+                        </li>
+                      )}
 
+                      {err.password !== "" && (
+                        <li>
+                          {err.password} <br />
+                        </li>
+                      )}
+                    </ul>
                     <div className="mx-auto">
                       <Button
                         type={"submit"}
@@ -136,19 +213,14 @@ function Login() {
                         butSize={"small"}
                         radius={"10px"}
                         onClick={register}
+                        able={able}
                       />
                     </div>
                   </form>
+
                   <p>
                     Already have an account? <a href="/login">Login</a>
                   </p>
-                  {loading && (
-                    <Lottie
-                      options={defaultOptions}
-                      // height={"100px"}
-                      width={"100px"}
-                    />
-                  )}
                 </div>
               </div>
             </div>
@@ -166,10 +238,18 @@ function Login() {
           </Modal.Header>
           <Modal.Body>You have registered for your account</Modal.Body>
           <Modal.Footer>
-            <Button butStyle={"secondary"} onClick={() => handleClose()}>
+            <Button
+              butStyle={"secondary"}
+              onClick={() => handleClose()}
+              able={true}
+            >
               Close
             </Button>
-            <Button variant="primary" onClick={() => navigate("/login")}>
+            <Button
+              variant="primary"
+              onClick={() => navigate("/login")}
+              able={true}
+            >
               Login
             </Button>
           </Modal.Footer>

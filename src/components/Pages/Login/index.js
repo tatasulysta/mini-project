@@ -8,16 +8,32 @@ import MainNav from "../../MainNav";
 import "./style.css";
 const cookie = new Cookies();
 function Login() {
+  const [getData, { data: dataUser, loading }] = useLazyQuery(GETuser);
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-  const [state, setState] = useState(false);
+  const [err, setErr] = useState({
+    email: "",
+    password: "",
+    wrong: "",
+  });
+  const [able, setAble] = useState(false);
   const navigate = useNavigate();
+  const emailRex = /^[a-zA-Z0-9]+@(?:[a-zA-Z0-9]+\.)+[A-Za-z]+$/;
   const handleChange = (e) => {
+    const key = e.target.name;
+    const val = e.target.value;
     setData({ ...data, [e.target.name]: e.target.value });
+
+    if (key === "email") {
+      if (!emailRex.test(val)) {
+        setErr({ ...err, email: "Email is invalid" });
+      } else {
+        setErr({ ...err, email: "" });
+      }
+    }
   };
-  const [getData, { data: dataUser }] = useLazyQuery(GETuser);
   const login = (e) => {
     e.preventDefault();
     getData({
@@ -26,24 +42,34 @@ function Login() {
         password: data.password,
       },
     });
-    console.log("click");
   };
 
   useEffect(() => {}, [data, dataUser]);
+
   useEffect(() => {
-    if (dataUser?.user.length === 1) {
-      if (state === true) {
+    if (data.email === "" && data.password === "") {
+      setAble(false);
+    } else if (err.email === "" && err.password === "") {
+      setAble(true);
+    } else {
+      setAble(false);
+    }
+  }, [data, err]);
+
+  useEffect(() => {
+    if (dataUser !== undefined) {
+      if (dataUser?.user.length === 1) {
         cookie.set("loginID", dataUser.user[0].id);
+        return navigate("/menu");
+      } else if (dataUser?.user.length !== 1) {
+        setErr({ ...err, wrong: "Wrong Email or password" });
       }
-      if (state === false) {
-        cookie.set("loginID", dataUser.user[0].id, { expires: 0 });
+      if (cookie.get("loginID")) {
+        return navigate("/menu");
       }
-      return navigate("/menu");
     }
-    if (cookie.get("loginID")) {
-      return navigate("/menu");
-    }
-  }, [dataUser, state]);
+    // eslint-disable-next-line
+  }, [dataUser]);
 
   return (
     <>
@@ -58,21 +84,32 @@ function Login() {
               <img
                 src="./assets/images/login.png"
                 alt=""
-                srcset=""
                 className="img-fluid"
               />
             </div>
             <div className="col-md-8 contents" style={{ background: "white" }}>
               <div className="row justify-content-center">
                 <div className="col-md-8">
-                  <div className="mb-4">
-                    <h3>Log In</h3>
-                    <p className="mb-4">welcome Back !</p>
+                  <div className="mb-4 row">
+                    <div className="col-lg-10 col-sm-9 col-md-9 col-8">
+                      <h3>Log In</h3>
+                      <p className="mb-4">Welcome back!</p>
+                    </div>
+
+                    {loading && (
+                      <div className="col-lg-2 col-sm-3 col-md-3 col-3">
+                        <img
+                          src="assets/loading.gif"
+                          style={{ width: "90px" }}
+                          alt=""
+                        />
+                      </div>
+                    )}
                   </div>
 
                   <form className="justify-content-center p-2" onSubmit={login}>
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlfor="email">
+                      <label className="form-label" htmlFor="email">
                         Email
                         <input
                           type="text"
@@ -86,7 +123,7 @@ function Login() {
                     </div>
 
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlfor="password">
+                      <label className="form-label" htmlFor="password">
                         Password
                         <input
                           type="password"
@@ -98,13 +135,25 @@ function Login() {
                         />
                       </label>
                     </div>
-
+                    <ul className="error">
+                      {err.email !== "" && (
+                        <li>
+                          {err.email} <br />
+                        </li>
+                      )}
+                      {err.wrong !== "" && (
+                        <li>
+                          {err.wrong} <br />
+                        </li>
+                      )}
+                    </ul>
                     <div className="mx-auto">
                       <Button
                         type={"submit"}
                         children={"Sign In"}
                         butSize={"small"}
                         radius={"10px"}
+                        able={able}
                         onClick={login}
                       />
                     </div>

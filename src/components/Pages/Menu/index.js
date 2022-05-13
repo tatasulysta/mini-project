@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Category from "../../Card/Category";
 import MenuContainer from "../../MenuContainer/Index";
 import { Row, Col, Container } from "react-bootstrap";
@@ -19,22 +22,19 @@ import {
 } from "@apollo/client";
 
 import { Button } from "../../Button/index";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import Lottie from "react-lottie";
 import searching from "../../../lotties/searching.json";
 import searchNotFound from "../../../lotties/searchNotFound.json";
 import Loading from "../../Loading";
 import Cookies from "universal-cookie";
 import Header from "../../Header";
+import { reset } from "../../../store/counterSlice";
+import Helmet from "react-helmet";
 const cookies = new Cookies();
 function Menu() {
   // Global state
   const counter = useSelector((state) => state.counter.value);
   const uid = cookies.get("loginID");
-  useEffect(() => {
-    document.title = "Menu";
-  });
 
   //state & hooks
   const [select, setSelect] = useState("pizza");
@@ -43,6 +43,7 @@ function Menu() {
   const [list, setList] = useState([]);
   const [add, setAdd] = useState(false);
   let navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // graphql
   const { data: resPizza, loading: loadPizza } = useQuery(GETpizza);
@@ -76,11 +77,6 @@ function Menu() {
       setList(resSnack?.menu);
     }
   };
-  useEffect(() => {
-    if (resPizza?.menu) {
-      setList(resPizza?.menu);
-    }
-  }, [resPizza]);
 
   const handleSubmit = (inp) => {
     setSelect("");
@@ -89,32 +85,6 @@ function Menu() {
     fetchDatabyName({ variables });
     setName("");
   };
-
-  useEffect(() => {
-    data && setList(data?.menu);
-  }, [data, name]);
-  useEffect(() => {
-    let temp = [];
-    resCart?.Cart.map((i) => temp.push(i.id_menu));
-    setID(temp);
-  }, [resCart]);
-  useEffect(() => {
-    console.log("from that");
-    console.log(dataAdd?.insert_Cart);
-    console.log(dataUpdate);
-    console.log(loadUp);
-  }, [dataAdd, dataUpdate, loadUp]);
-
-  useEffect(() => {
-    if (counter.length === 0) {
-      setAdd(false);
-    } else {
-      setAdd(true);
-    }
-    let banyak = 0;
-    counter.map((i) => (banyak += i.count));
-    console.log(banyak);
-  }, [counter]);
 
   const handleAddcart = () => {
     let notIn = [];
@@ -150,8 +120,42 @@ function Menu() {
       }
       return 0;
     });
-    // navigate("/cart");
+    navigate("/cart");
   };
+  useEffect(() => {
+    if (resPizza?.menu) {
+      setList(resPizza?.menu);
+    }
+  }, [resPizza]);
+  useEffect(() => {
+    data && setList(data?.menu);
+  }, [data, name]);
+  useEffect(() => {
+    let temp = [];
+    resCart?.Cart.map((i) => temp.push(i.id_menu));
+    setID(temp);
+  }, [resCart]);
+  useEffect(() => {
+    if (
+      dataAdd?.insert_Cart.affected_rows !== 0 ||
+      dataUpdate?.update_Cart.affected_rows !== 0
+    ) {
+      dispatch(reset());
+    }
+  }, [dataAdd, dataUpdate, loadUp, dispatch]);
+
+  useEffect(() => {
+    let sum = 0;
+    counter.map((i) => (sum += i.count));
+    if (counter.length === 0) {
+      setAdd(false);
+    } else if (sum === 0) {
+      setAdd(false);
+    } else {
+      setAdd(true);
+    }
+  }, [counter]);
+
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -171,6 +175,10 @@ function Menu() {
 
   return (
     <div className="padd">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Briskly - Menu</title>
+      </Helmet>
       {loading ? (
         <Lottie
           options={defaultOptions}
@@ -295,11 +303,21 @@ function Menu() {
                 <Button
                   children="Add to cart"
                   butStyle="primary"
+                  able={true}
                   onClick={handleAddcart}
                 />
               </div>
             ) : (
-              ""
+              <div
+                style={{ float: "right", marginTop: "20px", display: "flex" }}
+              >
+                <Button
+                  children="Add to cart"
+                  butStyle="primary"
+                  able={false}
+                  onClick={handleAddcart}
+                />
+              </div>
             )}
           </Container>
         </div>
