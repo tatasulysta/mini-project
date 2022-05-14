@@ -6,6 +6,7 @@ const initialState = {
   services: 0,
   total: 0,
   items: 0,
+  click: false,
 };
 
 export const counterSlice = createSlice({
@@ -39,9 +40,13 @@ export const counterSlice = createSlice({
     reset: (state) => {
       state.value = [];
     },
+    change: (state, action) => {
+      state.click = action.payload;
+    },
   },
 });
 
-export const { increment, add, decrement, reset, total } = counterSlice.actions;
+export const { increment, add, decrement, reset, total, change } =
+  counterSlice.actions;
 
 export default counterSlice.reducer;

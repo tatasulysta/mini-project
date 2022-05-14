@@ -96,7 +96,7 @@ function Home() {
           </div>
         </div>
       </Container>
-      <Container id="menu" className={style.menu}>
+      <section id="menu" className={style.menu}>
         <div className={`justify-content-center ${style.secondPage} mx-auto`}>
           <h3 className={style.title}>
             Explore <span style={{ color: "var(--primary-color)" }}>Menu</span>
@@ -104,7 +104,7 @@ function Home() {
           <br />
           <MenuContainer data={list} show={false} styles={"bg-no"} />
         </div>
-      </Container>
+      </section>
       <Container className={style.how} id="how">
         <div className={`justify-content-center ${style.secondPage} mx-auto`}>
           <h2 className={style.title} style={{ color: "var(--primary-color)" }}>

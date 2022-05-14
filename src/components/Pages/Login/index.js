@@ -6,6 +6,7 @@ import Cookies from "universal-cookie";
 import { Button } from "../../Button";
 import MainNav from "../../MainNav";
 import "./style.css";
+import { Link } from "react-router-dom";
 const cookie = new Cookies();
 function Login() {
   const [getData, { data: dataUser, loading }] = useLazyQuery(GETuser);
@@ -159,7 +160,7 @@ function Login() {
                     </div>
                   </form>
                   <p>
-                    Don't have account? <a href="/register">Register</a>
+                    Don't have account? <Link to="/register">Register</Link>
                   </p>
                 </div>
               </div>

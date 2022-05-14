@@ -49,26 +49,26 @@ export const ImageData = [
   },
   {
     id: 13,
-    img: "/assets/images/menu/13.jpg",
+    img: "/assets/images/menu/13.png",
   },
   {
     id: 14,
-    img: "/assets/images/menu/14.jpg",
+    img: "/assets/images/menu/14.png",
   },
   {
     id: 15,
-    img: "/assets/images/menu/15.jpg",
+    img: "/assets/images/menu/15.png",
   },
   {
     id: 16,
-    img: "/assets/images/menu/16.webp",
+    img: "/assets/images/menu/16.png",
   },
   {
     id: 17,
-    img: "/assets/images/menu/17.webp",
+    img: "/assets/images/menu/17.png",
   },
   {
     id: 18,
-    img: "/assets/images/menu/18.jpg",
+    img: "/assets/images/menu/18.png",
   },
 ];
