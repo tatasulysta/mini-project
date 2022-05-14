@@ -9,7 +9,7 @@ import "../Login/style.css";
 import { Modal } from "react-bootstrap";
 import MainNav from "../../MainNav";
 import useDebounce from "../../../hooks/useDebounce";
-
+import { Link } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();
   const [data, setData] = useState({
@@ -219,7 +219,7 @@ function Login() {
                   </form>
 
                   <p>
-                    Already have an account? <a href="/login">Login</a>
+                    Already have an account? <Link to="/login">Login</Link>
                   </p>
                 </div>
               </div>
