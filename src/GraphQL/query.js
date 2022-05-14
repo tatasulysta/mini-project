@@ -96,7 +96,7 @@ const GETtotal = gql`
 `;
 const GETuser = gql`
   query MyQuery($email: String!, $password: String!) {
-    user(where: { email: { _eq: $email }, password: { _eq: $password } }) {
+    user(where: { email: { _iregex: $email }, password: { _eq: $password } }) {
       id
       password
       username

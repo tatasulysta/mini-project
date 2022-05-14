@@ -58,6 +58,7 @@ function Cart() {
     });
     dispatch(total(price));
   }, [list, dispatch]);
+
   const handleCheckout = (sum, list) => {
     const temp = new Date();
     const uuid = uuidv4();

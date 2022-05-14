@@ -28,7 +28,8 @@ import searchNotFound from "../../../lotties/searchNotFound.json";
 import Loading from "../../Loading";
 import Cookies from "universal-cookie";
 import Header from "../../Header";
-import { reset } from "../../../store/counterSlice";
+
+import { reset, change } from "../../../store/counterSlice";
 import Helmet from "react-helmet";
 const cookies = new Cookies();
 function Menu() {
@@ -44,7 +45,7 @@ function Menu() {
   const [add, setAdd] = useState(false);
   let navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const click = useSelector((state) => state.counter.click);
   // graphql
   const { data: resPizza, loading: loadPizza } = useQuery(GETpizza);
   const { data: resBurger, loading: loadBurger } = useQuery(GETburger);
@@ -58,9 +59,8 @@ function Menu() {
   const [fetchDatabyName, { data, loading }] = useLazyQuery(GETmenuByName, {
     notifyOnNetworkStatusChange: true,
   });
-  const [addCart, { data: dataAdd }] = useMutation(Addcart);
-  const [updateCart, { data: dataUpdate, loading: loadUp }] =
-    useMutation(UpdateCart);
+  const [addCart] = useMutation(Addcart);
+  const [updateCart] = useMutation(UpdateCart);
 
   const handleClick = (what) => {
     setSelect(what);
@@ -120,6 +120,7 @@ function Menu() {
       }
       return 0;
     });
+    dispatch(change(true));
     navigate("/cart");
   };
   useEffect(() => {
@@ -136,13 +137,12 @@ function Menu() {
     setID(temp);
   }, [resCart]);
   useEffect(() => {
-    if (
-      dataAdd?.insert_Cart.affected_rows !== 0 ||
-      dataUpdate?.update_Cart.affected_rows !== 0
-    ) {
+    if (click === true) {
       dispatch(reset());
+      dispatch(change(false));
     }
-  }, [dataAdd, dataUpdate, loadUp, dispatch]);
+    //eslint-disable-next-line
+  }, [click]);
 
   useEffect(() => {
     let sum = 0;
