@@ -1,8 +1,8 @@
 import React from "react";
 import Cookies from "universal-cookie";
 import { Outlet } from "react-router-dom";
-import NotFound from "../Pages/NotFound";
-import Navibar from "../Navbar";
+import NotFound from "../components/Pages/NotFound";
+import Navibar from "../components/Navbar";
 const cookies = new Cookies();
 
 export default function PrivateRoute() {

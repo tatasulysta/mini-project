@@ -7,7 +7,7 @@ import NotFound from "./components/Pages/NotFound";
 import Cart from "./components/Pages/Cart/Index";
 import Home from "./components/Pages/Home";
 import Login from "./components/Pages/Login";
-import PrivateRoute from "./components/Routes/PrivateRoute";
+import PrivateRoute from "./router/PrivateRoute";
 import Register from "./components/Pages/Register/Index";
 
 function App() {
