@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../Button";
+import { Button } from "../../components/Button";
 import style from "./styles.module.css";
-import { GETmenu } from "../../../GraphQL/query";
-import MenuContainer from "../../MenuContainer/Index";
+import { GETmenu } from "../../GraphQL/query";
+import MenuContainer from "../../components/MenuContainer/Index";
 import { useQuery } from "@apollo/client";
 import Helmet from "react-helmet";
 function Home() {

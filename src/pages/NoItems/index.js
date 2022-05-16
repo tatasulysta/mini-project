@@ -1,8 +1,8 @@
 import React from "react";
-import zero from "../../../lotties/zero.json";
+import zero from "../../lotties/zero.json";
 import Lottie from "react-lottie";
 import style from "./style.module.css";
-import { Button } from "../../Button";
+import { Button } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 const defaultOptions = {
   loop: true,

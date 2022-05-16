@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import CartCard from "../../Card/CartCard";
-import { GETcart } from "../../../GraphQL/subscription";
+import CartCard from "../../components/Card/CartCard";
+import { GETcart } from "../../GraphQL/subscription";
 import { useMutation, useSubscription } from "@apollo/client";
-import InfoCard from "../../Card/InfoCard";
-import { total } from "../../../store/counterSlice";
+import InfoCard from "../../components/Card/InfoCard";
+import { total } from "../../store/counterSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Button } from "../../Button";
+import { Button } from "../../components/Button";
 import { v4 as uuidv4 } from "uuid";
 import {
   AddHistoryLabel,
   AddHistoryDetails,
   DeleteCart,
-} from "../../../GraphQL/mutation";
+} from "../../GraphQL/mutation";
 import style from "./styles.module.css";
-import Loading from "../../Loading";
+import Loading from "../../components/Loading";
 import NoItems from "../NoItems";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";

@@ -1,14 +1,14 @@
 import { useLazyQuery, useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GETemail } from "../../../GraphQL/query";
-import { Adduser } from "../../../GraphQL/mutation";
+import { GETemail } from "../../GraphQL/query";
+import { Adduser } from "../../GraphQL/mutation";
 
-import { Button } from "../../Button";
+import { Button } from "../../components/Button";
 import "../Login/style.css";
 import { Modal } from "react-bootstrap";
-import MainNav from "../../MainNav";
-import useDebounce from "../../../hooks/useDebounce";
+import MainNav from "../../components/MainNav";
+import useDebounce from "../../hooks/useDebounce";
 import { Link } from "react-router-dom";
 function Login() {
   const navigate = useNavigate();

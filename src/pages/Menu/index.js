@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Category from "../../Card/Category";
-import MenuContainer from "../../MenuContainer/Index";
+import Category from "../../components/Card/Category";
+import MenuContainer from "../../components/MenuContainer/Index";
 import { Row, Col, Container } from "react-bootstrap";
 import {
   GETpizza,
@@ -11,25 +10,23 @@ import {
   GETdrink,
   GETsnack,
   GETmenuByName,
-} from "../../../GraphQL/query";
-import { GETcartID } from "../../../GraphQL/subscription";
-import { Addcart, UpdateCart } from "../../../GraphQL/mutation";
+} from "../../GraphQL/query";
+import { GETcartID } from "../../GraphQL/subscription";
+import { Addcart, UpdateCart } from "../../GraphQL/mutation";
 import {
   useLazyQuery,
   useMutation,
   useQuery,
   useSubscription,
 } from "@apollo/client";
-
-import { Button } from "../../Button/index";
+import { Button } from "../../components/Button/index";
 import Lottie from "react-lottie";
-import searching from "../../../lotties/searching.json";
-import searchNotFound from "../../../lotties/searchNotFound.json";
-import Loading from "../../Loading";
+import searching from "../../lotties/searching.json";
+import searchNotFound from "../../lotties/searchNotFound.json";
+import Loading from "../../components/Loading";
 import Cookies from "universal-cookie";
-import Header from "../../Header";
-
-import { reset, change } from "../../../store/counterSlice";
+import Header from "../../components/Header";
+import { reset, change } from "../../store/counterSlice";
 import Helmet from "react-helmet";
 const cookies = new Cookies();
 function Menu() {
