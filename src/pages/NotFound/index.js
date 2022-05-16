@@ -1,6 +1,6 @@
 import React from "react";
 import Lottie from "react-lottie";
-import noFace from "../../../lotties/error.json";
+import noFace from "../../lotties/error.json";
 import style from "./styles.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Helmet from "react-helmet";

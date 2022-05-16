@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import HistoryLabel from "../../Card/HistoryLabel/Index";
-import { GETlabel } from "../../../GraphQL/subscription";
+import HistoryLabel from "../../components/Card/HistoryLabel/Index";
+import { GETlabel } from "../../GraphQL/subscription";
 import { useSubscription } from "@apollo/client";
 import { useParams, Outlet } from "react-router-dom";
-import Loading from "../../Loading";
+import Loading from "../../components/Loading";
 import { Row } from "react-bootstrap";
 import NoItems from "../NoItems";
 import Cookies from "universal-cookie";

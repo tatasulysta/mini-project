@@ -1,14 +1,14 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Menu from "../components/Pages/Menu";
-import History from "../components/Pages/History";
-import Histories from "../components/Pages/Histories";
-import NotFound from "../components/Pages/NotFound";
-import Cart from "../components/Pages/Cart/Index";
-import Home from "../components/Pages/Home";
-import Login from "../components/Pages/Login";
+import Menu from "../pages/Menu";
+import History from "../pages/History";
+import Histories from "../pages/Histories";
+import NotFound from "../pages/NotFound";
+import Cart from "../pages/Cart/Index";
+import Home from "../pages/Home";
+import Login from "../pages/Login";
 import PrivateRoute from "./PrivateRoute";
-import Register from "../components/Pages/Register/Index";
+import Register from "../pages/Register/Index";
 
 export default function GlobalRoute() {
   return (
