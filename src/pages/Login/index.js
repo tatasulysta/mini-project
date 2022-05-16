@@ -1,10 +1,10 @@
 import { useLazyQuery } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GETuser } from "../../../GraphQL/query";
+import { GETuser } from "../../GraphQL/query";
 import Cookies from "universal-cookie";
-import { Button } from "../../Button";
-import MainNav from "../../MainNav";
+import { Button } from "../../components/Button";
+import MainNav from "../../components/MainNav";
 import "./style.css";
 import { Link } from "react-router-dom";
 const cookie = new Cookies();

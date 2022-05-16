@@ -1,7 +1,7 @@
 import React from "react";
 import Cookies from "universal-cookie";
 import { Outlet } from "react-router-dom";
-import NotFound from "../components/Pages/NotFound";
+import NotFound from "../pages/NotFound";
 import Navibar from "../components/Navbar";
 const cookies = new Cookies();
 

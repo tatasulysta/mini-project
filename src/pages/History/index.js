@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Loading from "../../Loading";
+import Loading from "../../components/Loading";
 import { useNavigate, useParams } from "react-router-dom";
-import HistoryCard from "../../Card/HistoryCard";
-import { GEThistories, GETtotal } from "../../../GraphQL/query";
+import HistoryCard from "../../components/Card/HistoryCard";
+import { GEThistories, GETtotal } from "../../GraphQL/query";
 import { useQuery } from "@apollo/client";
-import InfoCard from "../../Card/InfoCard";
-import { Button } from "../../Button";
+import InfoCard from "../../components/Card/InfoCard";
+import { Button } from "../../components/Button";
 import Cookies from "universal-cookie";
 import styles from "./styles.module.css";
 import NotFound from "../NotFound";
